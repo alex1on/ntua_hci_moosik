@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+.ntua_hci_moosik
 
 # IntelliJ related
 *.iml
