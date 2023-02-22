@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ntua_hci_moosik/Landing_Page.dart';
+import 'package:ntua_hci_moosik/Starting_Page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
       ),
-      home: const LandingPage(),
+      home: const StartingPage(),
     );
   }
 }

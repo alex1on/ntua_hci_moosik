@@ -1,18 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ntua_hci_moosik/Login_Page.dart';
+import 'package:ntua_hci_moosik/Landing_Page.dart';
+import 'dart:async';
 
-class LandingPage extends StatefulWidget {
-  const LandingPage({Key? key}) : super(key: key);
+
+
+class StartingPage extends StatefulWidget {
+  const StartingPage({Key? key}) : super(key: key);
 
   @override
-  State<LandingPage> createState() => _LandingPageState();
+  State<StartingPage> createState() => _StartingPageState();
 }
 
-class _LandingPageState extends State<LandingPage> {
+class _StartingPageState extends State<StartingPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    // Wait for 2 seconds before navigating to the new page
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LandingPage()),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       body: Container(
         width: 460,
         height: 944,
@@ -82,7 +99,7 @@ class _LandingPageState extends State<LandingPage> {
               ),
             ),
             Center(
-              // middle text
+              // middle text 
               child: Container(
                 margin: const EdgeInsets.fromLTRB(64, 5, 64, 72),
                 width: 460,
@@ -135,96 +152,18 @@ class _LandingPageState extends State<LandingPage> {
               ),
             ),
             Center(
-              child: Container(
-                // signupbutton
-                margin: const EdgeInsets.fromLTRB(66, 80, 67, 39),
-                width: 460,
-                height: 45,
-                decoration: BoxDecoration(
-                  color: const Color(0xfffb5a00),
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: TextButton(
-                  // Make navigation to Sign Up Page
-                  onPressed: () {
-                    debugPrint(
-                      'Text Button',
-                    );
-                  },
-                  child: Center(
-                    child: Center(
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          style: GoogleFonts.inter(
-                            fontSize: 19,
-                            fontWeight: FontWeight.w800,
-                            height: 1.0526315789,
-                            letterSpacing: 0.1000000015,
-                            color: const Color(0xff000000),
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'SIGN UP',
-                              style: GoogleFonts.inter(
-                                fontSize: 19,
-                                fontWeight: FontWeight.w900,
-                                height: 1.0526315789,
-                                letterSpacing: 0.1000000015,
-                                color: const Color(0xff000000),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                // loginbutton
-                margin: const EdgeInsets.fromLTRB(67, 0, 66, 150),
-                width: 460,
-                height: 45,
-                decoration: BoxDecoration(
-                  color: const Color(0xfffb5a00),
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                    );
-                  },
-                  child: Center(
-                    child: Center(
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          style: GoogleFonts.inter(
-                            fontSize: 19,
-                            fontWeight: FontWeight.w800,
-                            height: 1.0526315789,
-                            letterSpacing: 0.1000000015,
-                            color: const Color(0xff000000),
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'LOG IN',
-                              style: GoogleFonts.inter(
-                                fontSize: 19,
-                                fontWeight: FontWeight.w900,
-                                height: 1.0526315789,
-                                letterSpacing: 0.1000000015,
-                                color: const Color(0xff000000),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+              
+              child: Center(
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: 'Welcome',
+                    style: GoogleFonts.roboto(
+                      fontSize: 50,
+                      fontWeight: FontWeight.w900,
+                      height: 1.0526315789,
+                      letterSpacing: 0.1000000015,
+                      color: const Color(0xf7ffffff),
                     ),
                   ),
                 ),
