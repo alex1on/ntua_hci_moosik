@@ -18,7 +18,7 @@ class _StartingPageState extends State<StartingPage> {
     super.initState();
 
     // Wait for 2 seconds before navigating to the new page
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const LandingPage()),
