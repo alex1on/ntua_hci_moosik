@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ntua_hci_moosik/Landing_Page.dart';
 import 'dart:async';
+import 'package:ntua_hci_moosik/main.dart';
 
 
 
@@ -13,10 +14,14 @@ class StartingPage extends StatefulWidget {
 }
 
 class _StartingPageState extends State<StartingPage> {
+
+  late SQLiteService sqLiteService;
   @override
   void initState() {
     super.initState();
 
+    sqLiteService = SQLiteService();
+    sqLiteService.initDB();
     // Wait for 2 seconds before navigating to the new page
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.push(
