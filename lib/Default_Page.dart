@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ntua_hci_moosik/Settings_Page.dart';
 
 class DefaultPage extends StatefulWidget {
   const DefaultPage({Key? key}) : super(key: key);
@@ -62,18 +63,21 @@ class _DefaultPageState extends State<DefaultPage> {
                                 // settingsKVt (266:7256)
                                 margin: const EdgeInsets.fromLTRB(0, 0, 2, 0),
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    // Make navigation to Settings Page
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const SettingsPage()),
+                                    );
+                                  },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
                                   ),
                                   child: const SizedBox(
                                     width: 48,
                                     height: 48,
-                                    child: Icon(
-                                      Icons.settings,
-                                      size: 24,
-                                      color: Colors.grey
-                                    ),
+                                    child: Icon(Icons.settings,
+                                        size: 24, color: Colors.grey),
                                   ),
                                 ),
                               ),
@@ -86,7 +90,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                     padding: EdgeInsets.zero,
                                   ),
                                   child: Container(
-                                    padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(8, 0, 0, 0),
                                     width: 250,
                                     height: double.infinity,
                                     decoration: BoxDecoration(
@@ -117,7 +122,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   fontWeight: FontWeight.w400,
                                                   height: 1.5,
                                                   letterSpacing: 0.5,
-                                                  color: const Color(0xffcac4d0),
+                                                  color:
+                                                      const Color(0xffcac4d0),
                                                 ),
                                               ),
                                             ),
@@ -134,8 +140,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                 width: 40,
                                                 height: 40,
                                                 child: Container(
-                                                  margin: const EdgeInsets.fromLTRB(
-                                                      0, 0, 24, 0),
+                                                  margin:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 24, 0),
                                                   child: const Icon(
                                                     Icons.search,
                                                     size: 24,
@@ -184,8 +191,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                   children: [
                                     Container(
                                       // happybutton1Sa (266:7253)
-                                      margin:
-                                          const EdgeInsets.fromLTRB(0, 0, 17, 0),
+                                      margin: const EdgeInsets.fromLTRB(
+                                          0, 0, 17, 0),
                                       child: TextButton(
                                         onPressed: () {},
                                         style: TextButton.styleFrom(
@@ -196,7 +203,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                           height: double.infinity,
                                           decoration: BoxDecoration(
                                             color: const Color(0xfffb5a00),
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                           ),
                                           child: Center(
                                             child: Center(
@@ -208,7 +216,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   fontWeight: FontWeight.w900,
                                                   height: 0.7142857143,
                                                   letterSpacing: 0.1000000015,
-                                                  color: const Color(0xff000000),
+                                                  color:
+                                                      const Color(0xff000000),
                                                 ),
                                               ),
                                             ),
@@ -227,7 +236,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                         height: double.infinity,
                                         decoration: BoxDecoration(
                                           color: const Color(0xfffb5a00),
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                         child: Center(
                                           child: Center(
@@ -258,8 +268,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                   children: [
                                     Container(
                                       // excitedbuttonTSz (266:7251)
-                                      margin:
-                                          const EdgeInsets.fromLTRB(0, 0, 17, 0),
+                                      margin: const EdgeInsets.fromLTRB(
+                                          0, 0, 17, 0),
                                       child: TextButton(
                                         onPressed: () {},
                                         style: TextButton.styleFrom(
@@ -272,14 +282,16 @@ class _DefaultPageState extends State<DefaultPage> {
                                           height: double.infinity,
                                           decoration: BoxDecoration(
                                             color: const Color(0xfffb5a00),
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                           ),
                                           child: Center(
                                             // labeltextMHU (I266:7251;50716:11408)
                                             child: Center(
                                               child: SizedBox(
                                                 child: Container(
-                                                  constraints: const BoxConstraints(
+                                                  constraints:
+                                                      const BoxConstraints(
                                                     maxWidth: 106,
                                                   ),
                                                   child: Text(
@@ -287,11 +299,13 @@ class _DefaultPageState extends State<DefaultPage> {
                                                     textAlign: TextAlign.center,
                                                     style: GoogleFonts.inter(
                                                       fontSize: 28,
-                                                      fontWeight: FontWeight.w900,
+                                                      fontWeight:
+                                                          FontWeight.w900,
                                                       height: 0.7142857143,
-                                                      letterSpacing: 0.1000000015,
-                                                      color:
-                                                          const Color(0xff000000),
+                                                      letterSpacing:
+                                                          0.1000000015,
+                                                      color: const Color(
+                                                          0xff000000),
                                                     ),
                                                   ),
                                                 ),
@@ -312,7 +326,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                         height: double.infinity,
                                         decoration: BoxDecoration(
                                           color: const Color(0xfffb5a00),
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                         child: Center(
                                           child: Center(
@@ -374,10 +389,12 @@ class _DefaultPageState extends State<DefaultPage> {
                                         height: 200,
                                         decoration: BoxDecoration(
                                           color: const Color(0xfffb5a00),
-                                          borderRadius: BorderRadius.circular(100),
+                                          borderRadius:
+                                              BorderRadius.circular(100),
                                           image: const DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: AssetImage('images/moosik.jpg'),
+                                            image:
+                                                AssetImage('images/moosik.jpg'),
                                           ),
                                         ),
                                         child: Center(
@@ -467,7 +484,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                           height: 30,
                                           child: RichText(
                                             text: TextSpan(
-                                              style: GoogleFonts.bigShouldersText(
+                                              style:
+                                                  GoogleFonts.bigShouldersText(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.w500,
                                                 height: 1.5,
@@ -476,22 +494,24 @@ class _DefaultPageState extends State<DefaultPage> {
                                               children: [
                                                 TextSpan(
                                                   text: '98 ',
-                                                  style:
-                                                      GoogleFonts.bigShouldersText(
+                                                  style: GoogleFonts
+                                                      .bigShouldersText(
                                                     fontSize: 20,
                                                     fontWeight: FontWeight.w600,
                                                     height: 1.5,
-                                                    color: const Color(0xffffea7b),
+                                                    color:
+                                                        const Color(0xffffea7b),
                                                   ),
                                                 ),
                                                 TextSpan(
                                                   text: '%',
-                                                  style:
-                                                      GoogleFonts.bigShouldersText(
+                                                  style: GoogleFonts
+                                                      .bigShouldersText(
                                                     fontSize: 20,
                                                     fontWeight: FontWeight.w600,
                                                     height: 1.5,
-                                                    color: const Color(0x7fffffff),
+                                                    color:
+                                                        const Color(0x7fffffff),
                                                   ),
                                                 ),
                                               ],
@@ -558,10 +578,11 @@ class _DefaultPageState extends State<DefaultPage> {
                                                     textAlign: TextAlign.center,
                                                     style: GoogleFonts.roboto(
                                                       fontSize: 15,
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       height: 1.1725,
-                                                      color:
-                                                          const Color(0xffff0000),
+                                                      color: const Color(
+                                                          0xffff0000),
                                                     ),
                                                   ),
                                                 ),
@@ -580,10 +601,11 @@ class _DefaultPageState extends State<DefaultPage> {
                                                     textAlign: TextAlign.center,
                                                     style: GoogleFonts.roboto(
                                                       fontSize: 36,
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                       height: 1.171875,
-                                                      color:
-                                                          const Color(0xffff0000),
+                                                      color: const Color(
+                                                          0xffff0000),
                                                     ),
                                                   ),
                                                 ),
@@ -698,9 +720,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                 children: [
                                                   Container(
                                                     // autogroupqaanEhG (J5MdKJoeJUp8HrQtW6qaaN)
-                                                    margin:
-                                                        const EdgeInsets.fromLTRB(
-                                                            9.15, 0, 0, 0.49),
+                                                    margin: const EdgeInsets
+                                                            .fromLTRB(
+                                                        9.15, 0, 0, 0.49),
                                                     width: 36.12,
                                                     height: 47.27,
                                                     child: Stack(
@@ -715,8 +737,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 10.45,
                                                               child: Text(
                                                                 'e',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
@@ -740,8 +763,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 12.21,
                                                               child: Text(
                                                                 'n',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
@@ -765,13 +789,15 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 13,
                                                               child: Text(
                                                                 't',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w700,
-                                                                  height: 1.2125,
+                                                                  height:
+                                                                      1.2125,
                                                                   color: const Color(
                                                                       0xffffffff),
                                                                 ),
@@ -789,13 +815,15 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 13,
                                                               child: Text(
                                                                 'M',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w700,
-                                                                  height: 1.2125,
+                                                                  height:
+                                                                      1.2125,
                                                                   color: const Color(
                                                                       0xffffffff),
                                                                 ),
@@ -822,13 +850,15 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 13,
                                                               child: Text(
                                                                 '#',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w700,
-                                                                  height: 1.2125,
+                                                                  height:
+                                                                      1.2125,
                                                                   color: const Color(
                                                                       0xffffffff),
                                                                 ),
@@ -846,13 +876,15 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 13,
                                                               child: Text(
                                                                 'C',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w700,
-                                                                  height: 1.2125,
+                                                                  height:
+                                                                      1.2125,
                                                                   color: const Color(
                                                                       0xffffffff),
                                                                 ),
@@ -870,13 +902,15 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 13,
                                                               child: Text(
                                                                 'u',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w700,
-                                                                  height: 1.2125,
+                                                                  height:
+                                                                      1.2125,
                                                                   color: const Color(
                                                                       0xffffffff),
                                                                 ),
@@ -894,13 +928,15 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 13,
                                                               child: Text(
                                                                 'r',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w700,
-                                                                  height: 1.2125,
+                                                                  height:
+                                                                      1.2125,
                                                                   color: const Color(
                                                                       0xffffffff),
                                                                 ),
@@ -918,13 +954,15 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 13,
                                                               child: Text(
                                                                 'r',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w700,
-                                                                  height: 1.2125,
+                                                                  height:
+                                                                      1.2125,
                                                                   color: const Color(
                                                                       0xffffffff),
                                                                 ),
@@ -956,11 +994,13 @@ class _DefaultPageState extends State<DefaultPage> {
                                                         height: 13.87,
                                                         child: Text(
                                                           'o',
-                                                          style: GoogleFonts.inter(
+                                                          style:
+                                                              GoogleFonts.inter(
                                                             fontSize: 10,
                                                             fontWeight:
                                                                 FontWeight.w700,
-                                                            height: 1.2102272034,
+                                                            height:
+                                                                1.2102272034,
                                                             color: const Color(
                                                                 0xffffffff),
                                                           ),
@@ -978,7 +1018,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                         height: 13,
                                                         child: Text(
                                                           'o',
-                                                          style: GoogleFonts.inter(
+                                                          style:
+                                                              GoogleFonts.inter(
                                                             fontSize: 10,
                                                             fontWeight:
                                                                 FontWeight.w700,
@@ -1003,7 +1044,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w700,
                                                   height: 1.2125,
-                                                  color: const Color(0xffffffff),
+                                                  color:
+                                                      const Color(0xffffffff),
                                                 ),
                                               ),
                                             ),
@@ -1017,7 +1059,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w700,
                                                   height: 1.2125,
-                                                  color: const Color(0xffffffff),
+                                                  color:
+                                                      const Color(0xffffffff),
                                                 ),
                                               ),
                                             ),
@@ -1031,7 +1074,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w700,
                                                   height: 1.2125,
-                                                  color: const Color(0xffffffff),
+                                                  color:
+                                                      const Color(0xffffffff),
                                                 ),
                                               ),
                                             ),
@@ -1045,7 +1089,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w700,
                                                   height: 1.2125,
-                                                  color: const Color(0xffffffff),
+                                                  color:
+                                                      const Color(0xffffffff),
                                                 ),
                                               ),
                                             ),
@@ -1059,7 +1104,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w700,
                                                   height: 1.2125,
-                                                  color: const Color(0xffffffff),
+                                                  color:
+                                                      const Color(0xffffffff),
                                                 ),
                                               ),
                                             ),
@@ -1081,11 +1127,13 @@ class _DefaultPageState extends State<DefaultPage> {
                                                         height: 12.18,
                                                         child: Text(
                                                           'i',
-                                                          style: GoogleFonts.inter(
+                                                          style:
+                                                              GoogleFonts.inter(
                                                             fontSize: 10,
                                                             fontWeight:
                                                                 FontWeight.w700,
-                                                            height: 1.2102272034,
+                                                            height:
+                                                                1.2102272034,
                                                             color: const Color(
                                                                 0xffffffff),
                                                           ),
@@ -1103,11 +1151,13 @@ class _DefaultPageState extends State<DefaultPage> {
                                                         height: 13.4,
                                                         child: Text(
                                                           'c',
-                                                          style: GoogleFonts.inter(
+                                                          style:
+                                                              GoogleFonts.inter(
                                                             fontSize: 10,
                                                             fontWeight:
                                                                 FontWeight.w700,
-                                                            height: 1.2102272034,
+                                                            height:
+                                                                1.2102272034,
                                                             color: const Color(
                                                                 0xffffffff),
                                                           ),
@@ -1128,9 +1178,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                 children: [
                                                   Container(
                                                     // autogroupg7keQWW (J5MePcMAZizk6fUw36g7ke)
-                                                    margin:
-                                                        const EdgeInsets.fromLTRB(
-                                                            0, 0, 7.02, 1.18),
+                                                    margin: const EdgeInsets
+                                                            .fromLTRB(
+                                                        0, 0, 7.02, 1.18),
                                                     width: 43.89,
                                                     height: 51.11,
                                                     child: Stack(
@@ -1145,8 +1195,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 13.65,
                                                               child: Text(
                                                                 'S',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
@@ -1170,8 +1221,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 13.24,
                                                               child: Text(
                                                                 'u',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
@@ -1195,8 +1247,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 12.64,
                                                               child: Text(
                                                                 'g',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
@@ -1220,13 +1273,15 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 13,
                                                               child: Text(
                                                                 'g',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w700,
-                                                                  height: 1.2125,
+                                                                  height:
+                                                                      1.2125,
                                                                   color: const Color(
                                                                       0xffffffff),
                                                                 ),
@@ -1244,8 +1299,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 10.01,
                                                               child: Text(
                                                                 'e',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
@@ -1264,9 +1320,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   ),
                                                   Container(
                                                     // autogroupl2mpdAJ (J5MeYMbbMubRQ1jgyEL2Mp)
-                                                    margin:
-                                                        const EdgeInsets.fromLTRB(
-                                                            0, 0, 1.31, 3.67),
+                                                    margin: const EdgeInsets
+                                                            .fromLTRB(
+                                                        0, 0, 1.31, 3.67),
                                                     width: 16.04,
                                                     height: 17.45,
                                                     child: Stack(
@@ -1281,13 +1337,15 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 13,
                                                               child: Text(
                                                                 's',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w700,
-                                                                  height: 1.2125,
+                                                                  height:
+                                                                      1.2125,
                                                                   color: const Color(
                                                                       0xffffffff),
                                                                 ),
@@ -1305,8 +1363,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 5.95,
                                                               child: Text(
                                                                 't',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
@@ -1325,9 +1384,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   ),
                                                   Container(
                                                     // autogroup2pcnYwU (J5MecBpYR1tph1DhSG2PCN)
-                                                    margin:
-                                                        const EdgeInsets.fromLTRB(
-                                                            0, 0, 0, 4.34),
+                                                    margin: const EdgeInsets
+                                                            .fromLTRB(
+                                                        0, 0, 0, 4.34),
                                                     width: 13.32,
                                                     height: 15.83,
                                                     child: Stack(
@@ -1342,13 +1401,15 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 13,
                                                               child: Text(
                                                                 'i',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w700,
-                                                                  height: 1.2125,
+                                                                  height:
+                                                                      1.2125,
                                                                   color: const Color(
                                                                       0xffffffff),
                                                                 ),
@@ -1366,8 +1427,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               height: 7.22,
                                                               child: Text(
                                                                 'o',
-                                                                style: GoogleFonts
-                                                                    .inter(
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .inter(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
@@ -1386,17 +1448,18 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   ),
                                                   Container(
                                                     // nKqk (266:7247)
-                                                    margin:
-                                                        const EdgeInsets.fromLTRB(
-                                                            0, 0, 7.34, 0),
+                                                    margin: const EdgeInsets
+                                                            .fromLTRB(
+                                                        0, 0, 7.34, 0),
                                                     child: Text(
                                                       'n',
                                                       style: GoogleFonts.inter(
                                                         fontSize: 10,
-                                                        fontWeight: FontWeight.w700,
+                                                        fontWeight:
+                                                            FontWeight.w700,
                                                         height: 1.2125,
-                                                        color:
-                                                            const Color(0xffffffff),
+                                                        color: const Color(
+                                                            0xffffffff),
                                                       ),
                                                     ),
                                                   ),
@@ -1467,7 +1530,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                               color: const Color(0xff49454f)),
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                         child: SizedBox(
                                           // mediatextcontentSSW (I266:7180;170:7803)
@@ -1511,7 +1575,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                             style: TextButton
                                                                 .styleFrom(
                                                               padding:
-                                                                  EdgeInsets.zero,
+                                                                  EdgeInsets
+                                                                      .zero,
                                                             ),
                                                             child: Image.asset(
                                                               'images/moosik.jpg',
@@ -1527,8 +1592,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                               ),
                                               Container(
                                                 // title8Tk (I266:7180;170:7808)
-                                                margin: const EdgeInsets.fromLTRB(
-                                                    0, 0, 5, 0),
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 5, 0),
                                                 child: Text(
                                                   'Playlist',
                                                   style: GoogleFonts.roboto(
@@ -1536,7 +1602,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                     fontWeight: FontWeight.w400,
                                                     height: 1.5,
                                                     letterSpacing: 0.5,
-                                                    color: const Color(0xffe6e1e5),
+                                                    color:
+                                                        const Color(0xffe6e1e5),
                                                   ),
                                                 ),
                                               ),
@@ -1584,7 +1651,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                               color: const Color(0xff49454f)),
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                         child: SizedBox(
                                           // mediatextcontentNWW (I266:7181;170:7803)
@@ -1628,7 +1696,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                             style: TextButton
                                                                 .styleFrom(
                                                               padding:
-                                                                  EdgeInsets.zero,
+                                                                  EdgeInsets
+                                                                      .zero,
                                                             ),
                                                             child: Image.asset(
                                                               'images/moosik.jpg',
@@ -1644,8 +1713,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                               ),
                                               Container(
                                                 // titleUxr (I266:7181;170:7808)
-                                                margin: const EdgeInsets.fromLTRB(
-                                                    0, 0, 5, 0),
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 5, 0),
                                                 child: Text(
                                                   'Playlist',
                                                   style: GoogleFonts.roboto(
@@ -1653,7 +1723,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                     fontWeight: FontWeight.w400,
                                                     height: 1.5,
                                                     letterSpacing: 0.5,
-                                                    color: const Color(0xffe6e1e5),
+                                                    color:
+                                                        const Color(0xffe6e1e5),
                                                   ),
                                                 ),
                                               ),
@@ -1701,7 +1772,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                               color: const Color(0xff49454f)),
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                         child: SizedBox(
                                           // mediatextcontentZcv (I266:7182;170:7803)
@@ -1713,8 +1785,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                             children: [
                                               Container(
                                                 // mediagSe (I266:7182;170:7804)
-                                                margin: const EdgeInsets.fromLTRB(
-                                                    0, 0, 5, 0),
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 5, 0),
                                                 width: 103,
                                                 height: 99,
                                                 child: Stack(
@@ -1747,7 +1820,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                             style: TextButton
                                                                 .styleFrom(
                                                               padding:
-                                                                  EdgeInsets.zero,
+                                                                  EdgeInsets
+                                                                      .zero,
                                                             ),
                                                             child: Image.asset(
                                                               'images/moosik.jpg',
@@ -1769,7 +1843,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   fontWeight: FontWeight.w400,
                                                   height: 1.5,
                                                   letterSpacing: 0.5,
-                                                  color: const Color(0xffe6e1e5),
+                                                  color:
+                                                      const Color(0xffe6e1e5),
                                                 ),
                                               ),
                                             ],
@@ -1816,7 +1891,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                               color: const Color(0xff49454f)),
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                         child: SizedBox(
                                           // mediatextcontent8bU (I266:7183;170:7803)
@@ -1828,8 +1904,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                             children: [
                                               Container(
                                                 // mediag7C (I266:7183;170:7804)
-                                                padding: const EdgeInsets.fromLTRB(
-                                                    79, 3, 0, 3),
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        79, 3, 0, 3),
                                                 width: double.infinity,
                                                 height: 99,
                                                 decoration: const BoxDecoration(
@@ -1846,13 +1923,15 @@ class _DefaultPageState extends State<DefaultPage> {
                                                     width: 24,
                                                     height: 24,
                                                     child: Container(
-                                                      margin:
-                                                          const EdgeInsets.fromLTRB(
-                                                              0, 0, 0, 69),
+                                                      margin: const EdgeInsets
+                                                              .fromLTRB(
+                                                          0, 0, 0, 69),
                                                       child: TextButton(
                                                         onPressed: () {},
-                                                        style: TextButton.styleFrom(
-                                                          padding: EdgeInsets.zero,
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                          padding:
+                                                              EdgeInsets.zero,
                                                         ),
                                                         child: Image.asset(
                                                           'images/moosik.jpg',
@@ -1866,8 +1945,9 @@ class _DefaultPageState extends State<DefaultPage> {
                                               ),
                                               Container(
                                                 // title3bx (I266:7183;170:7808)
-                                                margin: const EdgeInsets.fromLTRB(
-                                                    0, 0, 5, 0),
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 5, 0),
                                                 child: Text(
                                                   'Playlist',
                                                   style: GoogleFonts.roboto(
@@ -1875,7 +1955,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                     fontWeight: FontWeight.w400,
                                                     height: 1.5,
                                                     letterSpacing: 0.5,
-                                                    color: const Color(0xffe6e1e5),
+                                                    color:
+                                                        const Color(0xffe6e1e5),
                                                   ),
                                                 ),
                                               ),
@@ -1923,7 +2004,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                               color: const Color(0xff49454f)),
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                         child: SizedBox(
                                           // mediatextcontentqRL (I266:7184;170:7803)
@@ -1935,10 +2017,12 @@ class _DefaultPageState extends State<DefaultPage> {
                                             children: [
                                               Container(
                                                 // mediaCFt (I266:7184;170:7804)
-                                                margin: const EdgeInsets.fromLTRB(
-                                                    0, 0, 5, 0),
-                                                padding: const EdgeInsets.fromLTRB(
-                                                    79, 3, 0, 3),
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 5, 0),
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        79, 3, 0, 3),
                                                 height: 99,
                                                 decoration: const BoxDecoration(
                                                   image: DecorationImage(
@@ -1954,13 +2038,15 @@ class _DefaultPageState extends State<DefaultPage> {
                                                     width: 24,
                                                     height: 24,
                                                     child: Container(
-                                                      margin:
-                                                          const EdgeInsets.fromLTRB(
-                                                              0, 0, 0, 69),
+                                                      margin: const EdgeInsets
+                                                              .fromLTRB(
+                                                          0, 0, 0, 69),
                                                       child: TextButton(
                                                         onPressed: () {},
-                                                        style: TextButton.styleFrom(
-                                                          padding: EdgeInsets.zero,
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                          padding:
+                                                              EdgeInsets.zero,
                                                         ),
                                                         child: Image.asset(
                                                           'images/moosik.jpg',
@@ -1980,7 +2066,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   fontWeight: FontWeight.w400,
                                                   height: 1.5,
                                                   letterSpacing: 0.5,
-                                                  color: const Color(0xffe6e1e5),
+                                                  color:
+                                                      const Color(0xffe6e1e5),
                                                 ),
                                               ),
                                             ],
@@ -2083,20 +2170,23 @@ class _DefaultPageState extends State<DefaultPage> {
                               children: [
                                 Container(
                                   // autogroupvknvQHQ (J5MgvTJ9rjdF8X1dbNVknv)
-                                  padding: const EdgeInsets.fromLTRB(0, 22, 60, 22),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 22, 60, 22),
                                   height: double.infinity,
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Container(
                                         // monogramk6N (I266:7257;138:7866;53219:27369)
-                                        margin:
-                                            const EdgeInsets.fromLTRB(0, 4, 16, 4),
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 4, 16, 4),
                                         width: 40,
                                         height: double.infinity,
                                         decoration: BoxDecoration(
                                           color: const Color(0xfffb5a00),
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                         child: Center(
                                           child: Center(
@@ -2133,7 +2223,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   fontWeight: FontWeight.w500,
                                                   height: 1.5,
                                                   letterSpacing: 0.150000006,
-                                                  color: const Color(0xffe6e1e5),
+                                                  color:
+                                                      const Color(0xffe6e1e5),
                                                 ),
                                               ),
                                             ),
@@ -2148,7 +2239,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   fontWeight: FontWeight.w400,
                                                   height: 1.4285714286,
                                                   letterSpacing: 0.25,
-                                                  color: const Color(0xffe6e1e5),
+                                                  color:
+                                                      const Color(0xffe6e1e5),
                                                 ),
                                               ),
                                             ),
@@ -2160,16 +2252,19 @@ class _DefaultPageState extends State<DefaultPage> {
                                 ),
                                 Container(
                                   // frame2608514R62 (I266:7257;138:7866;53219:27376)
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 0.66, 0),
-                                  padding: const EdgeInsets.fromLTRB(42, 37, 24, 0),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 0, 0.66, 0),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(42, 37, 24, 0),
                                   height: double.infinity,
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Container(
                                         // icons02LCz (I266:7257;138:7866;53219:27379)
-                                        margin:
-                                            const EdgeInsets.fromLTRB(0, 0, 4, 41),
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 0, 4, 41),
                                         width: 12,
                                         height: 14,
                                         child: Image.asset(
@@ -2180,8 +2275,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                       ),
                                       Container(
                                         // autogroupnq6nFar (J5MhBCNb5xX59bKszgNQ6n)
-                                        margin:
-                                            const EdgeInsets.fromLTRB(0, 1, 23, 0),
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 1, 23, 0),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,
@@ -2210,8 +2305,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                       ),
                                       Container(
                                         // iconsskipnextqox (I266:7257;138:7866;53219:27377)
-                                        margin:
-                                            const EdgeInsets.fromLTRB(0, 0, 0, 41),
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 0, 0, 41),
                                         width: 12,
                                         height: 12,
                                         child: Image.asset(
