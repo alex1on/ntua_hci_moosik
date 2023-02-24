@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'Default_Page.dart';
+
 class SetUpPage extends StatefulWidget {
   const SetUpPage({Key? key}) : super(key: key);
 
@@ -47,6 +49,7 @@ class _SetUpPageState extends State<SetUpPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
+                    // Load More 
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
@@ -79,6 +82,7 @@ class _SetUpPageState extends State<SetUpPage> {
                     ),
                   ),
                   Expanded(
+                    // Search button
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
@@ -104,14 +108,15 @@ class _SetUpPageState extends State<SetUpPage> {
               ),
               const SizedBox(height: 20),
               Padding(
+                // Confirm button
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const DefaultPage()),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DefaultPage()),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xfffb5a00),

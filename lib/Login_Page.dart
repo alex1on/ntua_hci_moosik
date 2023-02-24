@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'Default_Page.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -83,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const Padding(padding: EdgeInsets.symmetric(vertical: 30)),
             Center(
+              // login
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
@@ -101,6 +104,7 @@ class _LoginPageState extends State<LoginPage> {
             Column(
               children: [
                 Center(
+                  // username or email
                   child: SizedBox(
                     width: 327,
                     child: TextField(
@@ -133,6 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const Padding(padding: EdgeInsets.symmetric(vertical: 30)),
                 Center(
+                  // password
                   child: SizedBox(
                     width: 327,
                     child: TextField(
@@ -169,16 +174,18 @@ class _LoginPageState extends State<LoginPage> {
                 const Padding(padding: EdgeInsets.symmetric(vertical: 30)),
                 ElevatedButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => DefaultPage()),
-                    // );
+                    // Make navigation to Default Page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const DefaultPage()),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xfffb5a00),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100))),
                   child: SizedBox(
+                    // Continue
                     width: 105,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

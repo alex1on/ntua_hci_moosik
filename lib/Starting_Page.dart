@@ -152,7 +152,7 @@ class _StartingPageState extends State<StartingPage> {
               ),
             ),
             Center(
-              
+              // welcome
               child: Center(
                 child: RichText(
                   textAlign: TextAlign.center,
