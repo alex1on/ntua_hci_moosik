@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ntua_hci_moosik/Login_Page.dart';
+import 'package:ntua_hci_moosik/SignUp_Page.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -147,8 +148,9 @@ class _LandingPageState extends State<LandingPage> {
                 child: TextButton(
                   // Make navigation to Sign Up Page
                   onPressed: () {
-                    debugPrint(
-                      'Text Button',
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUpPage()),
                     );
                   },
                   child: Center(
