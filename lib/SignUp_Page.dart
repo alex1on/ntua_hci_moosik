@@ -340,7 +340,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100))),
                     child: SizedBox(
-                      width: 125,
+                      width: 135,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
