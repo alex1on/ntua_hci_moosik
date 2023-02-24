@@ -10,7 +10,14 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  String _password = '';
+  String _cpassword = '';
+  String username = '';
+  String email = '';
+  String errorString = '';
+  bool getstarted = false;
   DateTime? _selectedDate;
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -128,6 +135,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: SizedBox(
                       width: 327,
                       child: TextField(
+                        onChanged: (String value) {
+                          username = value;
+                        },
                         style: const TextStyle(
                           color: Color(0xff000000),
                           fontSize: 19,
@@ -160,6 +170,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: SizedBox(
                       width: 327,
                       child: TextField(
+                        onChanged: (String email1) {
+                          email = email1;
+                        },
                         style: const TextStyle(
                           color: Color(0xff000000),
                           fontSize: 19,
@@ -195,6 +208,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,
+                        onChanged: (value) {
+                          setState(() {
+                            _password = value;
+                          });
+                        },
                         style: const TextStyle(
                           color: Color(0xff000000),
                           fontSize: 19,
@@ -227,6 +245,18 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: SizedBox(
                       width: 327,
                       child: TextField(
+                        onChanged: (String cpassword) {
+                          setState(
+                            () {
+                              _cpassword = cpassword;
+                              if (cpassword != _password) {
+                                errorString = 'Passwords must match';
+                              } else {
+                                errorString = '';
+                              }
+                            },
+                          );
+                        },
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,
@@ -240,20 +270,20 @@ class _SignUpPageState extends State<SignUpPage> {
                         cursorWidth: 3.0,
                         textAlign: TextAlign.left,
                         decoration: InputDecoration(
-                          filled: true,
-                          fillColor: const Color(0xfffb5a00),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100)),
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 15.0),
-                          hintStyle: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 19,
-                            fontWeight: FontWeight.w700,
-                            color: Color.fromARGB(255, 44, 41, 41),
-                          ),
-                          hintText: 'Confirm Password',
-                        ),
+                            filled: true,
+                            fillColor: const Color(0xfffb5a00),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(100)),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 15.0),
+                            hintStyle: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 19,
+                              fontWeight: FontWeight.w700,
+                              color: Color.fromARGB(255, 44, 41, 41),
+                            ),
+                            hintText: 'Confirm Password',
+                            errorText: errorString),
                       ),
                     ),
                   ),
@@ -328,12 +358,37 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        //MaterialPageRoute(builder: (context) => SettingsPage()),
-                        MaterialPageRoute(builder: (context) => const SetUpPage()),
-                      );
+                    onPressed: () async {
+                      getstarted = (email.isNotEmpty) &&
+                          (username.isNotEmpty) &&
+                          (_password.isNotEmpty) &&
+                          (_password == _cpassword);
+                      if (getstarted) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SetUpPage()),
+                        );
+                      } else {
+                        await showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Almost Done!'),
+                              content: const Text(
+                                  'Please insert your credentials correctly.\n Make sure that the passwords match, and that no field is empty'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xfffb5a00),
