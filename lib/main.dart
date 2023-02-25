@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ntua_hci_moosik/Starting_Page.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
-import 'package:ntua_hci_moosik/Playlist_Page.dart';
 
 
 void main() => runApp(const MyApp());
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
       ),
-      home: const PlaylistPage(), // to be changed to starting page
+      home: const StartingPage(), // to be changed to starting page
     );
   }
 }
