@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ntua_hci_moosik/Starting_Page.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
-
+import 'package:ntua_hci_moosik/wearos/Moosik_Wear.dart';
 
 void main() => runApp(const MyApp());
 
@@ -11,12 +11,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Moosik',
-      theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-      ),
-      home: const StartingPage(), // to be changed to starting page
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        debugPrint('Host device screen width: ${constraints.maxWidth}');
+
+        // Watch-sized device
+        if (constraints.maxWidth < 300) {
+          return const MoosikWear();
+        }
+        // Phone-sized device
+        else {
+          return MaterialApp(
+            title: 'Moosik',
+            theme: ThemeData(
+              primarySwatch: Colors.deepOrange,
+            ),
+            home: const StartingPage(), // to be changed to starting page
+          );
+        }
+      },
     );
   }
 }
@@ -31,7 +44,13 @@ class User {
   String? gender;
 
   // Constructor
-  User({this.id, required this.username, required this.password, required this.email, this.dateOfBirth, this.gender});
+  User(
+      {this.id,
+      required this.username,
+      required this.password,
+      required this.email,
+      this.dateOfBirth,
+      this.gender});
 
   // Maps a database record to a user
   User.fromMap(Map<String, dynamic> user)
@@ -39,7 +58,9 @@ class User {
         username = user['username'],
         password = user['password'],
         email = user['email'],
-        dateOfBirth = user['dateOfBirth'] != null ? DateTime.parse(user['dateOfBirth']) : null,
+        dateOfBirth = user['dateOfBirth'] != null
+            ? DateTime.parse(user['dateOfBirth'])
+            : null,
         gender = user['gender'];
 
   // Maps a User instance to a database record
@@ -58,14 +79,12 @@ class User {
 
 /// [SQLiteService] class that implements the application's interface to the DB (SQLite)
 class SQLiteService {
-  
   // DB initialization
   Future<Database> initDB() async {
     return openDatabase(
       p.join(await getDatabasesPath(), 'moosik.db'),
       onCreate: (db, version) {
-        return db.execute(
-          '''
+        return db.execute('''
           CREATE TABLE users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT,
@@ -74,8 +93,7 @@ class SQLiteService {
             dateOfBirth TEXT,
             gender TEXT
           )
-          '''
-        );
+          ''');
       },
       version: 1,
     );
@@ -83,7 +101,6 @@ class SQLiteService {
 
   // Retrieve all users from db
   Future<List<User>> getUsers() async {
-
     // Connection with db
     final db = await initDB();
 
@@ -95,7 +112,6 @@ class SQLiteService {
 
   /// Add [User] [user] to db. Returns the primary key of the record.
   Future<int> addUser(User user) async {
-    
     // Connection with db.
     final db = await initDB();
 
@@ -106,7 +122,6 @@ class SQLiteService {
 
   /// Delete user with [id] from db
   Future<void> deleteUser(final id) async {
-    
     // Connection with db
     final db = await initDB();
 
@@ -115,22 +130,19 @@ class SQLiteService {
 
   // Update user
   Future<void> updateUser(User user) async {
-    
     // Connection with db
     final db = await initDB();
 
     await db.update(
-      'users', 
-      where: 'id = ?',
-      user.toMap(),
-      whereArgs: [user.id],
-      conflictAlgorithm: ConflictAlgorithm.replace
-    );
+        'users',
+        where: 'id = ?',
+        user.toMap(),
+        whereArgs: [user.id],
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  // Delete all user records from db  
+  // Delete all user records from db
   Future<void> deleteAll() async {
-    
     // Connection with db
     final db = await initDB();
 
