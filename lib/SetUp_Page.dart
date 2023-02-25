@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:ntua_hci_moosik/main.dart';
 import 'Default_Page.dart';
 
 class SetUpPage extends StatefulWidget {
@@ -12,6 +12,10 @@ class SetUpPage extends StatefulWidget {
 
 class _SetUpPageState extends State<SetUpPage> {
   int _numSongs = 5;
+
+  // User to pass to default page
+  User _user = User(username: "", password: "", email: "");
+
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +119,7 @@ class _SetUpPageState extends State<SetUpPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DefaultPage()),
+                          builder: (context) =>  DefaultPage(user: _user,)),
                     );
                   },
                   style: ElevatedButton.styleFrom(

@@ -1,15 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ntua_hci_moosik/Settings_Page.dart';
+import 'package:ntua_hci_moosik/main.dart';
 
 class DefaultPage extends StatefulWidget {
-  const DefaultPage({Key? key}) : super(key: key);
+
+  late User user;
+
+  DefaultPage({Key? key, required this.user}) : super(key: key);
 
   @override
   State<DefaultPage> createState() => _DefaultPageState();
 }
 
 class _DefaultPageState extends State<DefaultPage> {
+
+  late User _current_user;
+
+  @override
+  void initState() {
+    super.initState();
+    _current_user = widget.user;
+  } 
+
+  // update _current_user when you come back from a page that changed user 
+  void _navigateToPage() async {
+    final updatedUser = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SettingsPage(user: widget.user)),
+    );
+    if (updatedUser != null) {
+      setState(() {
+        widget.user = updatedUser;
+        _current_user = widget.user;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,10 +92,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                 child: TextButton(
                                   onPressed: () {
                                     // Make navigation to Settings Page
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => const SettingsPage()),
-                                    );
+                                    _navigateToPage();
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
@@ -209,7 +233,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                           child: Center(
                                             child: Center(
                                               child: Text(
-                                                'Happy',
+                                                _current_user.username,
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.inter(
                                                   fontSize: 28,

@@ -1,28 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ntua_hci_moosik/main.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  final User user;
+
+  const SettingsPage({Key? key, required this.user}) : super(key: key);
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  late SQLiteService sqLiteService;
+  // List of users in db
+  List<User> _users = <User>[];
+
   // variables for switches
   bool _isSwitchedWearable = false;
   bool _isSwitchedDevice = false;
   bool _sleepTimerSwitched = false;
 
   // text editing controller for username
-  String _username = "JohnDoe";
+  String _username = "";
   final TextEditingController _newUsernameController = TextEditingController();
   bool _isEditingUsername = false;
 
   // text editing controller for password
-  String _password = "JohnDoe";
+  String _password = "";
   final TextEditingController _newPasswordController = TextEditingController();
   bool _isEditingPassword = false;
+
+  // Updated user to pass back to default page
+  late User _updated_user;
+
+  @override
+  void initState() {
+    super.initState();
+    _updated_user = widget.user;
+    sqLiteService = SQLiteService();
+    sqLiteService.initDB().whenComplete(() async {
+      final users = await sqLiteService.getUsers();
+      setState(() {
+        _users = users;
+      });
+    });
+  }
+
+  // Update user information and create a new User Object
+  void _updateUser(String usrname, String psw) async {
+    _updated_user = User(
+      id: widget.user.id,
+      username: usrname,
+      password: psw,
+      email: widget.user.email,
+      dateOfBirth: widget.user.dateOfBirth,
+      gender: widget.user.gender,
+    );
+    // update user in db
+    await sqLiteService.updateUser(_updated_user);
+  }
 
   @override
   void dispose() {
@@ -59,6 +96,7 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       _username = _newUsernameController.text;
       _isEditingUsername = false;
+      _updateUser(_username, widget.user.password);
     });
   }
 
@@ -66,6 +104,7 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       _password = _newPasswordController.text;
       _isEditingPassword = false;
+      _updateUser(widget.user.username, _password);
     });
   }
 
@@ -95,7 +134,7 @@ class _SettingsPageState extends State<SettingsPage> {
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, top: 16.0),
                 child: IconButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => Navigator.pop(context, _updated_user),
                   icon: const Icon(
                     Icons.arrow_back,
                     color: Colors.white,

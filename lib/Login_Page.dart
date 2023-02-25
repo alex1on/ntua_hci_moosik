@@ -14,9 +14,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   
   late SQLiteService sqLiteService;
+  // List of users in db
   List<User> _users = <User>[];
+
+  // username and password given by user to log in 
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  late User _authenticated_user = User(username: '', password: '', email: '');
 
   @override
   void initState() {
@@ -37,6 +41,8 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  // Check if credentials given are valid (i.e exist in databse)
+  /// and if they do, retrieve user using [_authenticated_user]
   bool _validCredentials() {
     final enteredUsername = _usernameController.text;
     final enteredPassword = _passwordController.text;
@@ -44,8 +50,11 @@ class _LoginPageState extends State<LoginPage> {
       (user) =>
           user.username == enteredUsername && user.password == enteredPassword,
     );
-
     if (matchedUser) {
+      _authenticated_user = _users.firstWhere(
+        (user) => 
+          user.username == enteredUsername && user.password == enteredPassword,
+      );
       return true;
     } else {
       return false;
@@ -150,8 +159,9 @@ class _LoginPageState extends State<LoginPage> {
                     width: 327,
                     child: TextField(
                       onChanged: (String value) {
-                          _usernameController.text = value;
-                        },
+                        // value is the username given in the textbox
+                        _usernameController.text = value;
+                      },
                       style: const TextStyle(
                         color: Color(0xff000000),
                         fontSize: 19,
@@ -186,8 +196,9 @@ class _LoginPageState extends State<LoginPage> {
                     width: 327,
                     child: TextField(
                       onChanged: (String value) {
-                          _passwordController.text = value;
-                        },
+                        // value is the password given in the textbox
+                        _passwordController.text = value;
+                      },
                       obscureText: true,
                       enableSuggestions: false,
                       autocorrect: false,
@@ -221,14 +232,18 @@ class _LoginPageState extends State<LoginPage> {
                 const Padding(padding: EdgeInsets.symmetric(vertical: 30)),
                 ElevatedButton(
                   onPressed: () async{
+                    // Check if credentials are valid
                     if (_validCredentials()) {
-                      // Make navigation to Default Page
+                      // Retrieve the user with the entered username and password
+                      // If they are, then
+                      // make navigation to Default Page and pass authenticated user to DefaultPage
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const DefaultPage()),
+                            builder: (context) => DefaultPage(user: _authenticated_user)),
                       );
                     } else {
+                      // If credentials are invalid, then AlertDialog will appear
                       await showDialog<void>(
                           context: context,
                           builder: (BuildContext context) {
@@ -237,6 +252,7 @@ class _LoginPageState extends State<LoginPage> {
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
+                                    // press 'OK' to close AlertDialog and try again
                                     Navigator.pop(context);
                                   },
                                   child: const Text('OK'),
