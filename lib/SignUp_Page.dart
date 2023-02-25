@@ -11,14 +11,40 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+
   late SQLiteService sqLiteService;
   List<User> _users = <User>[];
+
+  // data given by the user to sign up
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _cpasswordController = TextEditingController();
   final _emailController = TextEditingController();
   String? _selectedGender;
   DateTime? _selectedDate;
+
+  // User object to pass to set up page
+  late User _newUser = User(username: '', password: '', email: '');
+  // playlists object to pass to set up page
+  late List<Playlist> _defaultPlaylists = <Playlist>[];
+
+  // function that creates four empty default playlists for the new user and adds them to the db
+  void MakeDefaultPlaylists(int userID) async {
+    Playlist _Happy = Playlist(title: 'Happy', userID: userID);
+    Playlist _Sad = Playlist(title: 'Sad', userID: userID);
+    Playlist _Excited = Playlist(title: 'Excited', userID: userID); 
+    Playlist _Angry = Playlist(title: 'Angry', userID: userID);
+    
+    int Happy_id = await sqLiteService.addPlaylist(_Happy);
+    int Sad_id = await sqLiteService.addPlaylist(_Sad);
+    int Excited_id = await sqLiteService.addPlaylist(_Excited);
+    int Angry_id = await sqLiteService.addPlaylist(_Angry);  
+
+    _defaultPlaylists.add(Playlist(id: Happy_id ,title: 'Happy', userID: userID));
+    _defaultPlaylists.add(Playlist(id: Sad_id ,title: 'Sad', userID: userID));
+    _defaultPlaylists.add(Playlist(id: Excited_id, title: 'Excited', userID: userID));
+    _defaultPlaylists.add(Playlist(id:Angry_id, title: 'Angry', userID: userID));
+  }
 
   @override
   void initState() {
@@ -39,11 +65,12 @@ class _SignUpPageState extends State<SignUpPage> {
     super.dispose();
   }
 
+  /// Check if user with [enteredUsername] OR [enteredemail] already exists in database
   bool _UserExists() {
     final enteredUsername = _usernameController.text;
     final enteredemail = _emailController.text;
     final matchedUser = _users.any(
-      (user) => user.username == enteredUsername && user.email == enteredemail,
+      (user) => user.username == enteredUsername || user.email == enteredemail,
     );
 
     if (matchedUser) {
@@ -54,6 +81,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   String errorString = '';
+  // boolean to check if each required field is filled
   bool getstarted = false;
 
   Future<void> _selectDate(BuildContext context) async {
@@ -75,6 +103,7 @@ class _SignUpPageState extends State<SignUpPage> {
     'Female',
     'Other',
   ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -173,6 +202,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       width: 327,
                       child: TextField(
                         onChanged: (String value) {
+                          // store username
                           _usernameController.text = value;
                         },
                         style: const TextStyle(
@@ -208,6 +238,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       width: 327,
                       child: TextField(
                         onChanged: (String email1) {
+                          // store email
                           _emailController.text = email1;
                         },
                         style: const TextStyle(
@@ -247,6 +278,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         autocorrect: false,
                         onChanged: (value) {
                           setState(() {
+                            // store password
                             _passwordController.text = value;
                           });
                         },
@@ -285,6 +317,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         onChanged: (String cpassword) {
                           setState(
                             () {
+                              // check if password and confirm password fields match
                               _cpasswordController.text = cpassword;
                               if (cpassword != _passwordController.text) {
                                 errorString = 'Passwords must match';
@@ -338,6 +371,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             fontWeight: FontWeight.w700,
                             color: Color.fromARGB(255, 44, 41, 41),
                           ),
+                          // store selected date
                           hintText: _selectedDate == null
                               ? 'Date of Birth'
                               : 'Date of Birth: ${_selectedDate.toString()}',
@@ -381,6 +415,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         value: _selectedGender,
                         onChanged: (newValue) {
                           setState(() {
+                            // store gender
                             _selectedGender = newValue;
                           });
                         },
@@ -396,12 +431,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                   ElevatedButton(
                     onPressed: () async {
+                      // check if required fields are filled
                       getstarted = (_emailController.text.isNotEmpty) &&
                           (_usernameController.text.isNotEmpty) &&
                           (_passwordController.text.isNotEmpty) &&
                           (_passwordController.text ==
                               _cpasswordController.text);
                       if (!getstarted) {
+                        // if not, then display a proper message
                         await showDialog<void>(
                           context: context,
                           builder: (BuildContext context) {
@@ -421,7 +458,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           },
                         );
                       } else {
+                        // otherwise, check if user with the username or email given, exists in db
                         if (_UserExists()) {
+                          // if it does, then display proper message
                           await showDialog<void>(
                             context: context,
                             builder: (BuildContext context) {
@@ -440,22 +479,23 @@ class _SignUpPageState extends State<SignUpPage> {
                             },
                           );
                         } else {
-                          User? newUser = User(
+                          // otherwise, create the new user object, add new user to db and pass new user to set up page
+                          _newUser = User(
                               username:_usernameController.text,
                               password:_passwordController.text,
                               email: _emailController.text,
                               dateOfBirth: _selectedDate,
                               gender:_selectedGender
                           );
-                          final newID = await sqLiteService.addUser(newUser);
-                          newUser.id = newID;
-                          _users.add(newUser);
+                          final newID = await sqLiteService.addUser(_newUser);
+                          _newUser.id = newID;
+                          MakeDefaultPlaylists(newID);
+                          _users.add(_newUser);
                           setState(() {});
-                          
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const SetUpPage()),
+                                builder: (context) => SetUpPage(user: _newUser, defaultPlaylists: _defaultPlaylists)),
                           );
                         }
                       }
