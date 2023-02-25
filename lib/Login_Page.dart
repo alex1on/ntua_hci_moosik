@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ntua_hci_moosik/main.dart';
 
 import 'Default_Page.dart';
 
@@ -11,6 +12,46 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  
+  late SQLiteService sqLiteService;
+  List<User> _users = <User>[];
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    sqLiteService = SQLiteService();
+    sqLiteService.initDB().whenComplete(() async {
+      final users = await sqLiteService.getUsers();
+      setState(() {
+        _users = users;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  bool _validCredentials() {
+    final enteredUsername = _usernameController.text;
+    final enteredPassword = _passwordController.text;
+    final matchedUser = _users.any(
+      (user) =>
+          user.username == enteredUsername && user.password == enteredPassword,
+    );
+
+    if (matchedUser) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,10 +145,13 @@ class _LoginPageState extends State<LoginPage> {
             Column(
               children: [
                 Center(
-                  // username or email
+                  // username
                   child: SizedBox(
                     width: 327,
                     child: TextField(
+                      onChanged: (String value) {
+                          _usernameController.text = value;
+                        },
                       style: const TextStyle(
                         color: Color(0xff000000),
                         fontSize: 19,
@@ -130,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                           fontWeight: FontWeight.w700,
                           color: Color.fromARGB(255, 44, 41, 41),
                         ),
-                        hintText: 'Username or Email',
+                        hintText: 'Username',
                       ),
                     ),
                   ),
@@ -141,6 +185,9 @@ class _LoginPageState extends State<LoginPage> {
                   child: SizedBox(
                     width: 327,
                     child: TextField(
+                      onChanged: (String value) {
+                          _passwordController.text = value;
+                        },
                       obscureText: true,
                       enableSuggestions: false,
                       autocorrect: false,
@@ -173,12 +220,32 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const Padding(padding: EdgeInsets.symmetric(vertical: 30)),
                 ElevatedButton(
-                  onPressed: () {
-                    // Make navigation to Default Page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const DefaultPage()),
-                    );
+                  onPressed: () async{
+                    if (_validCredentials()) {
+                      // Make navigation to Default Page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DefaultPage()),
+                      );
+                    } else {
+                      await showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('The username or password is incorect!'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xfffb5a00),

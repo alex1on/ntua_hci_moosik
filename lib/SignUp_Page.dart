@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ntua_hci_moosik/SetUp_Page.dart';
+import 'package:ntua_hci_moosik/main.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -10,13 +11,50 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String _password = '';
-  String _cpassword = '';
-  String username = '';
-  String email = '';
+  late SQLiteService sqLiteService;
+  List<User> _users = <User>[];
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _cpasswordController = TextEditingController();
+  final _emailController = TextEditingController();
+  String? _selectedGender;
+  DateTime? _selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    sqLiteService = SQLiteService();
+    sqLiteService.initDB().whenComplete(() async {
+      final users = await sqLiteService.getUsers();
+      setState(() {
+        _users = users;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  bool _UserExists() {
+    final enteredUsername = _usernameController.text;
+    final enteredemail = _emailController.text;
+    final matchedUser = _users.any(
+      (user) => user.username == enteredUsername && user.email == enteredemail,
+    );
+
+    if (matchedUser) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   String errorString = '';
   bool getstarted = false;
-  DateTime? _selectedDate;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -32,7 +70,6 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  String? _selectedGender;
   final List<String> _genders = [
     'Male',
     'Female',
@@ -136,7 +173,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       width: 327,
                       child: TextField(
                         onChanged: (String value) {
-                          username = value;
+                          _usernameController.text = value;
                         },
                         style: const TextStyle(
                           color: Color(0xff000000),
@@ -171,7 +208,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       width: 327,
                       child: TextField(
                         onChanged: (String email1) {
-                          email = email1;
+                          _emailController.text = email1;
                         },
                         style: const TextStyle(
                           color: Color(0xff000000),
@@ -210,7 +247,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         autocorrect: false,
                         onChanged: (value) {
                           setState(() {
-                            _password = value;
+                            _passwordController.text = value;
                           });
                         },
                         style: const TextStyle(
@@ -248,8 +285,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         onChanged: (String cpassword) {
                           setState(
                             () {
-                              _cpassword = cpassword;
-                              if (cpassword != _password) {
+                              _cpasswordController.text = cpassword;
+                              if (cpassword != _passwordController.text) {
                                 errorString = 'Passwords must match';
                               } else {
                                 errorString = '';
@@ -359,17 +396,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                   ElevatedButton(
                     onPressed: () async {
-                      getstarted = (email.isNotEmpty) &&
-                          (username.isNotEmpty) &&
-                          (_password.isNotEmpty) &&
-                          (_password == _cpassword);
-                      if (getstarted) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SetUpPage()),
-                        );
-                      } else {
+                      getstarted = (_emailController.text.isNotEmpty) &&
+                          (_usernameController.text.isNotEmpty) &&
+                          (_passwordController.text.isNotEmpty) &&
+                          (_passwordController.text ==
+                              _cpasswordController.text);
+                      if (!getstarted) {
                         await showDialog<void>(
                           context: context,
                           builder: (BuildContext context) {
@@ -388,6 +420,44 @@ class _SignUpPageState extends State<SignUpPage> {
                             );
                           },
                         );
+                      } else {
+                        if (_UserExists()) {
+                          await showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text(
+                                    'Username or email already used!\nUse different username or email to complete your registration.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          User? newUser = User(
+                              username:_usernameController.text,
+                              password:_passwordController.text,
+                              email: _emailController.text,
+                              dateOfBirth: _selectedDate,
+                              gender:_selectedGender
+                          );
+                          final newID = await sqLiteService.addUser(newUser);
+                          newUser.id = newID;
+                          _users.add(newUser);
+                          setState(() {});
+                          
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SetUpPage()),
+                          );
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(
