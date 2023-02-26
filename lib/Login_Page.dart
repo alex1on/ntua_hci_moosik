@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ntua_hci_moosik/main.dart';
-
 import 'Default_Page.dart';
 
 class LoginPage extends StatefulWidget {
