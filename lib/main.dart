@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ntua_hci_moosik/Starting_Page.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
+import 'package:ntua_hci_moosik/wearos/Moosik_Wear.dart';
 
 void main() => runApp(const MyApp());
 
@@ -10,12 +11,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Moosik',
-      theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-      ),
-      home: const StartingPage(),
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        debugPrint('Host device screen width: ${constraints.maxWidth}');
+
+        // Watch-sized device
+        if (constraints.maxWidth < 300) {
+          return const MoosikWear();
+        }
+        // Phone-sized device
+        else {
+          return MaterialApp(
+            title: 'Moosik',
+            theme: ThemeData(
+              primarySwatch: Colors.deepOrange,
+            ),
+            home: const StartingPage(), // to be changed to starting page
+          );
+        }
+      },
     );
   }
 }
@@ -370,3 +384,4 @@ class SQLiteService {
     return queryResult.map((e) => Playlist.fromMap(e)).toList();
   }
 }
+
