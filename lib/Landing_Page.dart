@@ -138,9 +138,9 @@ class _LandingPageState extends State<LandingPage> {
             Center(
               child: Container(
                 // signupbutton
-                margin: const EdgeInsets.fromLTRB(66, 80, 67, 39),
+                margin: const EdgeInsets.fromLTRB(66, 0, 67, 39),
                 width: 460,
-                height: 45,
+                height: 42, // How much is 6 times 9?
                 decoration: BoxDecoration(
                   color: const Color(0xfffb5a00),
                   borderRadius: BorderRadius.circular(100),
@@ -189,7 +189,7 @@ class _LandingPageState extends State<LandingPage> {
                 // loginbutton
                 margin: const EdgeInsets.fromLTRB(67, 0, 66, 150),
                 width: 460,
-                height: 45,
+                height: 42,
                 decoration: BoxDecoration(
                   color: const Color(0xfffb5a00),
                   borderRadius: BorderRadius.circular(100),
