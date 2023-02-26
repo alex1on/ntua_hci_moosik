@@ -4,18 +4,44 @@ import 'package:ntua_hci_moosik/main.dart';
 import 'Default_Page.dart';
 
 class SetUpPage extends StatefulWidget {
-  const SetUpPage({Key? key}) : super(key: key);
+
+  late User user;
+  late List<Playlist> defaultPlaylists;
+  
+  SetUpPage({Key? key, required this.user, required this.defaultPlaylists}) : super(key: key);
 
   @override
-  _SetUpPageState createState() => _SetUpPageState();
+  State<SetUpPage> createState() => _SetUpPageState();
 }
 
 class _SetUpPageState extends State<SetUpPage> {
   int _numSongs = 5;
 
-  // User to pass to default page
-  User _user = User(username: "", password: "", email: "");
+  late User _current_user;
+  late List<Playlist> _defaultPlaylists;
 
+  late SQLiteService sqLiteService;
+  // List of users in db
+  List<User> _users = <User>[];
+  // List of curent user's playlists
+  List<Playlist> _usersPlaylists = <Playlist>[];
+
+  @override
+  void initState() {
+    super.initState();
+    _current_user = widget.user;
+    _defaultPlaylists = widget.defaultPlaylists;
+    sqLiteService = SQLiteService();
+    sqLiteService.initDB().whenComplete(() async {
+      final users = await sqLiteService.getUsers();
+      final playlists = await sqLiteService.getUserPlaylists(_current_user);
+      setState(() {
+        _users = users;
+        _usersPlaylists = playlists;
+        _defaultPlaylists = widget.defaultPlaylists;
+      });
+    });
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +62,10 @@ class _SetUpPageState extends State<SetUpPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
+              Text( 
                 'When you feel #emotion,\nwhich of the following songs\nwould you prefer to listen to?',
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w500,
                   height: 1.5,
@@ -119,7 +145,7 @@ class _SetUpPageState extends State<SetUpPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>  DefaultPage(user: _user,)),
+                          builder: (context) =>  DefaultPage(user: _current_user,)),
                     );
                   },
                   style: ElevatedButton.styleFrom(

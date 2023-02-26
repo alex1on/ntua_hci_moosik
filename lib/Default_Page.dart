@@ -418,7 +418,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                           image: const DecorationImage(
                                             fit: BoxFit.cover,
                                             image:
-                                                AssetImage('images/moosik.jpg'),
+                                                AssetImage('assets/images/moosik.jpg'),
                                           ),
                                         ),
                                         child: Center(
@@ -432,7 +432,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                 padding: EdgeInsets.zero,
                                               ),
                                               child: Image.asset(
-                                                'images/moosik.jpg',
+                                                'assets/images/moosik.jpg',
                                                 width: 149,
                                                 height: 159,
                                               ),
@@ -491,7 +491,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                           width: 40,
                                           height: 40,
                                           child: Image.asset(
-                                            'images/moosik.jpg',
+                                            'assets/images/moosik.jpg',
                                             width: 40,
                                             height: 40,
                                           ),
@@ -573,7 +573,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                           width: 39,
                                           height: 37,
                                           child: Image.asset(
-                                            'images/moosik.jpg',
+                                            'assets/images/moosik.jpg',
                                             width: 39,
                                             height: 37,
                                           ),
@@ -644,7 +644,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   width: 37.27,
                                                   height: 36.27,
                                                   child: Image.asset(
-                                                    'images/moosik.jpg',
+                                                    'assets/images/moosik.jpg',
                                                     width: 37.27,
                                                     height: 36.27,
                                                   ),
@@ -660,7 +660,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   width: 38,
                                                   height: 37,
                                                   child: Image.asset(
-                                                    'images/moosik.jpg',
+                                                    'assets/images/moosik.jpg',
                                                     width: 38,
                                                     height: 37,
                                                   ),
@@ -680,7 +680,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                           width: 50,
                                           height: 50,
                                           child: Image.asset(
-                                            'images/moosik.jpg',
+                                            'assets/images/moosik.jpg',
                                             width: 50,
                                             height: 50,
                                           ),
@@ -716,7 +716,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                           width: 384,
                                           height: 256,
                                           child: Image.asset(
-                                            'images/moosik.jpg',
+                                            'assets/images/moosik.jpg',
                                             width: 384,
                                             height: 256,
                                           ),
@@ -1580,7 +1580,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                           width: 100,
                                                           height: 99,
                                                           child: Image.asset(
-                                                            'images/moosik.jpg',
+                                                            'assets/images/moosik.jpg',
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ),
@@ -1603,7 +1603,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                                       .zero,
                                                             ),
                                                             child: Image.asset(
-                                                              'images/moosik.jpg',
+                                                              'assets/images/moosik.jpg',
                                                               width: 24,
                                                               height: 24,
                                                             ),
@@ -1701,7 +1701,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                           width: 100,
                                                           height: 99,
                                                           child: Image.asset(
-                                                            'images/moosik.jpg',
+                                                            'assets/images/moosik.jpg',
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ),
@@ -1724,7 +1724,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                                       .zero,
                                                             ),
                                                             child: Image.asset(
-                                                              'images/moosik.jpg',
+                                                              'assets/images/moosik.jpg',
                                                               width: 24,
                                                               height: 24,
                                                             ),
@@ -1825,7 +1825,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                           width: 100,
                                                           height: 99,
                                                           child: Image.asset(
-                                                            'images/moosik.jpg',
+                                                            'assets/images/moosik.jpg',
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ),
@@ -1848,7 +1848,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                                       .zero,
                                                             ),
                                                             child: Image.asset(
-                                                              'images/moosik.jpg',
+                                                              'assets/images/moosik.jpg',
                                                               width: 24,
                                                               height: 24,
                                                             ),
@@ -1937,7 +1937,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   image: DecorationImage(
                                                     fit: BoxFit.cover,
                                                     image: AssetImage(
-                                                        'images/moosik.jpg'),
+                                                        'assets/images/moosik.jpg'),
                                                   ),
                                                 ),
                                                 child: Align(
@@ -1958,7 +1958,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               EdgeInsets.zero,
                                                         ),
                                                         child: Image.asset(
-                                                          'images/moosik.jpg',
+                                                          'assets/images/moosik.jpg',
                                                           width: 24,
                                                           height: 24,
                                                         ),
@@ -2052,7 +2052,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                   image: DecorationImage(
                                                     fit: BoxFit.cover,
                                                     image: AssetImage(
-                                                        'images/moosik.jpg'),
+                                                        'assets/images/moosik.jpg'),
                                                   ),
                                                 ),
                                                 child: Align(
@@ -2073,7 +2073,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                                               EdgeInsets.zero,
                                                         ),
                                                         child: Image.asset(
-                                                          'images/moosik.jpg',
+                                                          'assets/images/moosik.jpg',
                                                           width: 24,
                                                           height: 24,
                                                         ),
@@ -2292,7 +2292,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                         width: 12,
                                         height: 14,
                                         child: Image.asset(
-                                          'images/moosik.jpg',
+                                          'assets/images/moosik.jpg',
                                           width: 12,
                                           height: 14,
                                         ),
@@ -2312,7 +2312,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                               width: 12,
                                               height: 12,
                                               child: Image.asset(
-                                                'images/moosik.jpg',
+                                                'assets/images/moosik.jpg',
                                                 width: 12,
                                                 height: 12,
                                               ),
@@ -2334,7 +2334,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                         width: 12,
                                         height: 12,
                                         child: Image.asset(
-                                          'images/moosik.jpg',
+                                          'assets/images/moosik.jpg',
                                           width: 12,
                                           height: 12,
                                         ),
@@ -2348,7 +2348,7 @@ class _DefaultPageState extends State<DefaultPage> {
                                   width: 20.3,
                                   height: 22,
                                   child: Image.asset(
-                                    'images/moosik.jpg',
+                                    'assets/images/moosik.jpg',
                                     width: 20.3,
                                     height: 22,
                                   ),
