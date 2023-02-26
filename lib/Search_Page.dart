@@ -5,22 +5,34 @@ import 'package:ntua_hci_moosik/Build_Song_Row.dart';
 import 'main.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+
+  late User user;
+
+  SearchPage({Key? key, required this.user}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
+
   final List<String> _recentSongs = ['Song 1', 'Song 2', 'Song 3', 'Song 4'];
   final TextEditingController _searchController = TextEditingController();
   bool _showRelatedSongs = false;
   bool _showResultSong = false;
 
+  late User _current_user;
+
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _current_user = widget.user;
   }
 
   @override
@@ -111,7 +123,8 @@ class _SearchPageState extends State<SearchPage> {
                   BuildSongRow(
                       color: Colors.grey[800],
                       song: Song.Happy_songs[0],
-                      isNotSelected: true),
+                      isNotSelected: true,
+                      user: _current_user,),
                   Padding(
                     padding: const EdgeInsets.only(
                         left: 8.0, top: 16.0, bottom: 8.0),
@@ -132,15 +145,18 @@ class _SearchPageState extends State<SearchPage> {
                         BuildSongRow(
                             color: Colors.grey[800],
                             song: Song.Happy_songs[0],
-                            isNotSelected: true),
+                            isNotSelected: true,
+                            user: _current_user,),
                         BuildSongRow(
                             color: Colors.grey[800],
                             song: Song.Happy_songs[0],
-                            isNotSelected: true),
+                            isNotSelected: true,
+                            user: _current_user,),
                         BuildSongRow(
                             color: Colors.grey[800],
                             song: Song.Happy_songs[0],
-                            isNotSelected: true),
+                            isNotSelected: true,
+                            user: _current_user,),
                       ],
                     ),
                   ),
@@ -164,15 +180,18 @@ class _SearchPageState extends State<SearchPage> {
                       BuildSongRow(
                           color: Colors.grey[800],
                           song: Song.Happy_songs[0],
-                          isNotSelected: true),
+                          isNotSelected: true, 
+                          user: _current_user,),
                       BuildSongRow(
                           color: Colors.grey[800],
                           song: Song.Happy_songs[0],
-                          isNotSelected: true),
+                          isNotSelected: true, 
+                          user: _current_user,),
                       BuildSongRow(
                           color: Colors.grey[800],
                           song: Song.Happy_songs[0],
-                          isNotSelected: true),
+                          isNotSelected: true, 
+                          user: _current_user,),
                     ],
                   )),
                 ],
@@ -202,7 +221,8 @@ class _SearchPageState extends State<SearchPage> {
                       song: Song.Happy_songs[0],
                       // songname: _recentSongs[index],
                       // artist: 'Artist',
-                      isNotSelected: true);
+                      isNotSelected: true,
+                      user: _current_user,);
                 },
               ),
             ),

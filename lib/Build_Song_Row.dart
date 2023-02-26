@@ -6,12 +6,14 @@ class BuildSongRow extends StatefulWidget {
   final Color? color;
   late Song song;
   late bool isNotSelected;
+  late User user;
 
   BuildSongRow({
     Key? key,
     required this.color,
     required this.song,
     required this.isNotSelected,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -22,18 +24,34 @@ class BuildSongRowState extends State<BuildSongRow> {
   AudioPlayer _player = AudioPlayer();
   late bool _isPlaying;
   late Song _song = widget.song;
+  late User _user;
+
+  late SQLiteService sqLiteService;
+
+  /// [_category] and [_playlistID] will be used to insert/delete songs to/from playlist
+  late String _category;
+  late int _playlistID;
+
 
   @override
   void initState() {
     super.initState();
     _song = widget.song;
+    _user = widget.user;
+    _category = widget.song.category;
     _player.setAudioSource(
       AudioSource.uri(
         Uri.parse('asset:///${_song.url}'),
       ),
     );
     _isPlaying = _player.playing;
-    _song = widget.song;
+    sqLiteService = SQLiteService();
+    sqLiteService.initDB().whenComplete(() async {
+      final playlistID = await sqLiteService.getPlaylistID(_user.id, _category);
+      setState(() {
+        _playlistID = playlistID;
+      });
+    });
   }
 
   @override
@@ -62,8 +80,25 @@ class BuildSongRowState extends State<BuildSongRow> {
     });
   }
 
+  void AddSong () async {
+    await sqLiteService.addSong(Song(title: _song.title, artist: _song.artist, url: _song.url, category: _song.category, playlistID: _playlistID));
+  }
+
+  void RemoveSong () async {
+    int SongID = await sqLiteService.getSongID(_song.title, _song.artist, _song.url, _song.category, _playlistID);
+    await sqLiteService.deleteSong(SongID);
+  }
+
   void _select() {
     setState(() {
+      // If add button is not selected, then you select it now, so add the song into the db
+      if(widget.isNotSelected) {
+         AddSong();
+      }
+      else {
+        // Otherwise, remove it from the db
+        RemoveSong();
+      }
       widget.isNotSelected = !widget.isNotSelected;
     });
   }

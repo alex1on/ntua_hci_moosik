@@ -383,5 +383,42 @@ class SQLiteService {
 
     return queryResult.map((e) => Playlist.fromMap(e)).toList();
   }
+
+  /// searchs for playlist with userID = [userID] and title = [title] 
+  /// if such a playlist exists, then it returns its id. Otherwise, -1 is returned
+  Future<int> getPlaylistID(int ?userID, String title) async {
+    final db = await initDB();
+
+    final List<Map<String, dynamic>> queryResult = await db.query(
+      'playlists',
+      where: 'userID = ? AND title = ?',
+      whereArgs: [userID, title],
+    );
+
+    if (queryResult.isNotEmpty) {
+      return queryResult.first['id'];
+    } else {
+      return -1;
+    }
+  }
+
+  /// searchs for a specific song
+  /// if such a song exists, then it returns its id. Otherwise, -1 is returned
+  Future<int> getSongID(String ?title, String ?artist, String ?url, String ?category, int ?playlistID) async {
+    final db = await initDB();
+
+    final List<Map<String, dynamic>> queryResult = await db.query(
+      'songs',
+      where: 'title = ? AND artist = ? AND url = ? AND category = ? AND playlistID = ?',
+      whereArgs: [title, artist, url, category, playlistID],
+    );
+
+    if (queryResult.isNotEmpty) {
+      return queryResult.first['id'];
+    } else {
+      return -1;
+    }
+  }
+
 }
 

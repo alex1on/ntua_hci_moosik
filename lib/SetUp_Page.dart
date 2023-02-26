@@ -56,6 +56,14 @@ class _SetUpPageState extends State<SetUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    // if index > 3, then you are done with set up --> go to default page.
+    if (widget.index > 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => DefaultPage(user: _current_user)),
+      );
+    }
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -88,7 +96,8 @@ class _SetUpPageState extends State<SetUpPage> {
                 BuildSongRow(
                     color: Colors.grey[800],
                     song: happy_songs[i],
-                    isNotSelected: true),
+                    isNotSelected: true,
+                    user: _current_user),
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -98,10 +107,40 @@ class _SetUpPageState extends State<SetUpPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _numSongs += 3;
-                          });
+                        onPressed: () async {
+                          // if there are no other songs left, display proper message
+                          if (_numSongs == happy_songs.length) {
+                            await showDialog<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text(
+                                      'There are no other songs left for this category!'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        // press 'OK' to close AlertDialog
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                          // else if there 0-3 left songs, then load them
+                          else if (_numSongs + 3 > happy_songs.length) {
+                            setState(() {
+                              _numSongs = happy_songs.length;
+                            });
+                          }
+                          // else display 3 more songs
+                          else {
+                            setState(() {
+                              _numSongs += 3;
+                            });
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xfffb5a00),
