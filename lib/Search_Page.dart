@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ntua_hci_moosik/Build_Song_Row.dart';
 
+import 'main.dart';
+
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
@@ -108,7 +110,7 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                   BuildSongRow(
                       color: Colors.grey[800],
-                      songname: 'Result Song',
+                      song: Song.Happy_songs[0],
                       isNotSelected: true),
                   Padding(
                     padding: const EdgeInsets.only(
@@ -129,15 +131,15 @@ class _SearchPageState extends State<SearchPage> {
                       children: [
                         BuildSongRow(
                             color: Colors.grey[800],
-                            songname: 'Related Song 1',
+                            song: Song.Happy_songs[0],
                             isNotSelected: true),
                         BuildSongRow(
                             color: Colors.grey[800],
-                            songname: 'Related Song 2',
+                            song: Song.Happy_songs[0],
                             isNotSelected: true),
                         BuildSongRow(
                             color: Colors.grey[800],
-                            songname: 'Related Song 3',
+                            song: Song.Happy_songs[0],
                             isNotSelected: true),
                       ],
                     ),
@@ -161,15 +163,15 @@ class _SearchPageState extends State<SearchPage> {
                     children: [
                       BuildSongRow(
                           color: Colors.grey[800],
-                          songname: 'Recent Song 1',
+                          song: Song.Happy_songs[0],
                           isNotSelected: true),
                       BuildSongRow(
                           color: Colors.grey[800],
-                          songname: 'Recent Song 3',
+                          song: Song.Happy_songs[0],
                           isNotSelected: true),
                       BuildSongRow(
                           color: Colors.grey[800],
-                          songname: 'Recent Song 2',
+                          song: Song.Happy_songs[0],
                           isNotSelected: true),
                     ],
                   )),
@@ -197,7 +199,9 @@ class _SearchPageState extends State<SearchPage> {
                 itemBuilder: (context, index) {
                   return BuildSongRow(
                       color: Colors.grey[800],
-                      songname: _recentSongs[index],
+                      song: Song.Happy_songs[0],
+                      // songname: _recentSongs[index],
+                      // artist: 'Artist',
                       isNotSelected: true);
                 },
               ),

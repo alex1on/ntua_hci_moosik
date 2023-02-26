@@ -3,7 +3,6 @@ import 'package:ntua_hci_moosik/Starting_Page.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
 
-
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
       ),
-      home: const StartingPage(), 
+      home: const StartingPage(),
     );
   }
 }
@@ -31,7 +30,13 @@ class User {
   String? gender;
 
   // Constructor
-  User({this.id, required this.username, required this.password, required this.email, this.dateOfBirth, this.gender});
+  User(
+      {this.id,
+      required this.username,
+      required this.password,
+      required this.email,
+      this.dateOfBirth,
+      this.gender});
 
   // Maps a database record to a user
   User.fromMap(Map<String, dynamic> user)
@@ -39,7 +44,9 @@ class User {
         username = user['username'],
         password = user['password'],
         email = user['email'],
-        dateOfBirth = user['dateOfBirth'] != null ? DateTime.parse(user['dateOfBirth']) : null,
+        dateOfBirth = user['dateOfBirth'] != null
+            ? DateTime.parse(user['dateOfBirth'])
+            : null,
         gender = user['gender'];
 
   // Maps a User instance to a database record
@@ -89,10 +96,16 @@ class Song {
   String artist;
   String url;
   String category;
-  int playlistID;
+  int? playlistID;
 
   // Constructor
-  Song({this.id, required this.title, required this.artist, required this.url, required this.category, required this.playlistID});
+  Song(
+      {this.id,
+      required this.title,
+      required this.artist,
+      required this.url,
+      required this.category,
+      this.playlistID});
 
   // Maps a database record to a song
   Song.fromMap(Map<String, dynamic> song)
@@ -115,21 +128,36 @@ class Song {
     };
     return record;
   }
-}
 
+  // sample data for happy songs
+  static List<Song> Happy_songs = [
+    Song(
+        title: 'Happy',
+        artist: 'Pharell Williams',
+        url: '../assets/music/happy.mp3',
+        category: 'Happy'),
+    Song(
+        title: 'YMCA',
+        artist: 'Village People',
+        url: '../assets/music/ymca.mp3',
+        category: 'Happy'),
+    Song(
+        title: 'The Passenger',
+        artist: 'Iggy Pop',
+        url: '../assets/music/the-passenger.mp3',
+        category: 'Happy')
+  ];
+}
 
 /// [SQLiteService] class that implements the application's interface to the DB (SQLite)
 class SQLiteService {
-  
   // DB initialization
   Future<Database> initDB() async {
     return openDatabase(
       p.join(await getDatabasesPath(), 'moosik.db'),
       onCreate: (db, version) async {
-        
         // Create users table
-        await db.execute(
-          '''
+        await db.execute('''
           CREATE TABLE users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT,
@@ -138,23 +166,19 @@ class SQLiteService {
             dateOfBirth TEXT,
             gender TEXT
           )
-          '''
-        );
+          ''');
 
         // Create playlists table
-        await db.execute(
-          '''
+        await db.execute('''
           CREATE TABLE playlists (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT,
             userID INTEGER,
             FOREIGN KEY (userID) REFERENCES users(id)
           )
-          '''
-        );
+          ''');
         // Create songs table
-        await db.execute(
-          '''
+        await db.execute('''
           CREATE TABLE songs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT,
@@ -164,8 +188,7 @@ class SQLiteService {
             playlistID INTEGER,
             FOREIGN KEY (playlistID) REFERENCES playlists(id)
           )
-          '''
-        );
+          ''');
       },
       version: 1,
     );
@@ -177,7 +200,6 @@ class SQLiteService {
 
   // Retrieve all users from db
   Future<List<User>> getUsers() async {
-
     // Connection with db
     final db = await initDB();
 
@@ -189,7 +211,6 @@ class SQLiteService {
 
   /// Add [User] [user] to db. Returns the primary key of the record.
   Future<int> addUser(User user) async {
-    
     // Connection with db.
     final db = await initDB();
 
@@ -200,7 +221,6 @@ class SQLiteService {
 
   /// Delete the [User] with [id] from the  db
   Future<void> deleteUser(final id) async {
-    
     // Connection with db
     final db = await initDB();
 
@@ -209,22 +229,19 @@ class SQLiteService {
 
   /// Update [User]
   Future<void> updateUser(User user) async {
-    
     // Connection with db
     final db = await initDB();
 
     await db.update(
-      'users', 
-      where: 'id = ?',
-      user.toMap(),
-      whereArgs: [user.id],
-      conflictAlgorithm: ConflictAlgorithm.replace
-    );
+        'users',
+        where: 'id = ?',
+        user.toMap(),
+        whereArgs: [user.id],
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  /// Delete all [User] records from db  
+  /// Delete all [User] records from db
   Future<void> deleteAllUsers() async {
-    
     // Connection with db
     final db = await initDB();
     await db.delete('users');
@@ -236,7 +253,6 @@ class SQLiteService {
 
   // Retrieve all playlists from db
   Future<List<Playlist>> getPlaylists() async {
-
     // Connection with db
     final db = await initDB();
 
@@ -248,7 +264,6 @@ class SQLiteService {
 
   /// Add [Playlist] [playlist] to db. Returns the primary key of the record.
   Future<int> addPlaylist(Playlist playlist) async {
-
     // Connection with db.
     final db = await initDB();
 
@@ -259,31 +274,27 @@ class SQLiteService {
 
   /// Delete the [Playlist] with [id] from the db.
   Future<void> deletePlaylist(final id) async {
+    // Connection with db.
+    final db = await initDB();
 
-  // Connection with db.
-  final db = await initDB();
-
-  await db.delete('playlists', where: 'id = ?', whereArgs: [id]);
+    await db.delete('playlists', where: 'id = ?', whereArgs: [id]);
   }
 
   /// Update [Playlist]
   Future<void> updatePlaylist(Playlist playlist) async {
-    
     // Connection with db
     final db = await initDB();
 
     await db.update(
-      'playlists', 
-      where: 'id = ?',
-      playlist.toMap(),
-      whereArgs: [playlist.id],
-      conflictAlgorithm: ConflictAlgorithm.replace
-    );
+        'playlists',
+        where: 'id = ?',
+        playlist.toMap(),
+        whereArgs: [playlist.id],
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  /// Delete all [Playlist] records from db  
+  /// Delete all [Playlist] records from db
   Future<void> deleteAllPlaylists() async {
-    
     // Connection with db
     final db = await initDB();
     await db.delete('playlists');
@@ -295,7 +306,6 @@ class SQLiteService {
 
   // Retrieve all songs from db
   Future<List<Playlist>> getSongs() async {
-
     // Connection with db
     final db = await initDB();
 
@@ -307,7 +317,6 @@ class SQLiteService {
 
   /// Add [Song] [song] to db. Returns the primary key of the record.
   Future<int> addSong(Song song) async {
-
     // Connection with db.
     final db = await initDB();
 
@@ -318,31 +327,27 @@ class SQLiteService {
 
   /// Delete the [Song] with [id] from the db.
   Future<void> deleteSong(final id) async {
+    // Connection with db.
+    final db = await initDB();
 
-  // Connection with db.
-  final db = await initDB();
-
-  await db.delete('songs', where: 'id = ?', whereArgs: [id]);
+    await db.delete('songs', where: 'id = ?', whereArgs: [id]);
   }
 
   /// Update [Song]
   Future<void> updateSong(Song song) async {
-    
     // Connection with db
     final db = await initDB();
 
     await db.update(
-      'songs', 
-      where: 'id = ?',
-      song.toMap(),
-      whereArgs: [song.id],
-      conflictAlgorithm: ConflictAlgorithm.replace
-    );
+        'songs',
+        where: 'id = ?',
+        song.toMap(),
+        whereArgs: [song.id],
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  /// Delete all [Song] records from db  
+  /// Delete all [Song] records from db
   Future<void> deleteAllSongs() async {
-    
     // Connection with db
     final db = await initDB();
     await db.delete('songs');
@@ -351,10 +356,9 @@ class SQLiteService {
   /*
   ############### EXTRAS ###############
   */
-  
+
   // returns a list of user's playlists
   Future<List<Playlist>> getUserPlaylists(User user) async {
-
     final db = await initDB();
 
     final List<Map<String, Object?>> queryResult = await db.query(

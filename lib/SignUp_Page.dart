@@ -495,7 +495,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SetUpPage(user: _newUser, defaultPlaylists: _defaultPlaylists)),
+                                builder: (context) => SetUpPage(user: _newUser, defaultPlaylists: _defaultPlaylists, index: 0,)),
                           );
                         }
                       }
