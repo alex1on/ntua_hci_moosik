@@ -9,6 +9,7 @@ class WearWatchAmbient extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.black,
         body: Center(
           child: WatchShape(
             builder: (BuildContext context, WearShape shape, Widget? child) {
