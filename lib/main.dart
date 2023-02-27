@@ -110,6 +110,9 @@ class Song {
   String artist;
   String url;
   String category;
+  String? type;
+  String? tag2;
+  String? tag3;
   int? playlistID;
 
   // Constructor
@@ -119,6 +122,9 @@ class Song {
       required this.artist,
       required this.url,
       required this.category,
+      this.type,
+      this.tag2,
+      this.tag3,
       this.playlistID});
 
   // Maps a database record to a song
@@ -128,6 +134,9 @@ class Song {
         artist = song['artist'],
         url = song['url'],
         category = song['category'],
+        type = song['type'],
+        tag2 = song['tag2'],
+        tag3 = song['tag3'],
         playlistID = song['playlistID'];
 
   // Maps a Song instance to a database record
@@ -138,6 +147,9 @@ class Song {
       'artist': artist,
       'url': url,
       'category': category,
+      'type': type,
+      'tag2': tag2,
+      'tag3': tag3,
       'playlistID': playlistID,
     };
     return record;
@@ -168,7 +180,10 @@ class Song {
         title: 'Happy',
         artist: 'Pharell Williams',
         url: '../assets/music/happy.mp3',
-        category: 'Happy'),
+        category: 'Happy',
+        type: 'pop',
+        tag2: 'Party',
+        tag3: 'Feel-Good'),
     Song(
         title: 'YMCA',
         artist: 'Village People',
@@ -257,6 +272,9 @@ class SQLiteService {
             url TEXT,
             category TEXT,
             playlistID INTEGER,
+            type, TEXT,
+            tag2, TEXT,
+            tag3, TEXT,
             FOREIGN KEY (playlistID) REFERENCES playlists(id)
           )
           ''');

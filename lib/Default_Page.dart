@@ -21,14 +21,18 @@ class _DefaultPageState extends State<DefaultPage> {
 
   late User _current_user;
   late SQLiteService sqLiteService;
-  // List of curent user's playlists
+  // List of current user's playlists
   List<Playlist> _usersPlaylists = <Playlist>[];
+  // List of of lists of songs for user's playlists
+  List<List<Song>> _playlistSongs = List.generate(4, (_) => []);
 
   // Every available song for each category
   List<Song> happy_songs = Song.Happy_songs;
   List<Song> sad_songs = Song.Sad_songs;
   List<Song> excited_songs = Song.Excited_songs;
   List<Song> angry_songs = Song.Angry_songs;
+
+  final feelings = ['Happy', 'Sad', 'Excited', 'Angry'];
 
   // Audio player
   AudioPlayer _player = AudioPlayer();
@@ -39,12 +43,20 @@ class _DefaultPageState extends State<DefaultPage> {
   void initState() {
     super.initState();
     _current_user = widget.user;
-    _myWidgets = _buildWidgets(4);
     sqLiteService = SQLiteService();
     sqLiteService.initDB().whenComplete(() async {
       final playlists = await sqLiteService.getUserPlaylists(_current_user);
+      final HappyListSongs = await sqLiteService.getPlaylistSongs(playlists[0]);
+      final SadListSongs = await sqLiteService.getPlaylistSongs(playlists[1]);
+      final ExcitedListSongs = await sqLiteService.getPlaylistSongs(playlists[2]);
+      final AngryListSongs = await sqLiteService.getPlaylistSongs(playlists[3]);
       setState(() {
         _usersPlaylists = playlists;
+        _playlistSongs[0].addAll(HappyListSongs);
+        _playlistSongs[1].addAll(SadListSongs);
+        _playlistSongs[2].addAll(ExcitedListSongs);
+        _playlistSongs[3].addAll(AngryListSongs);
+        _myWidgets = _buildWidgets(4);
       });
     });
   }
@@ -129,43 +141,57 @@ class _DefaultPageState extends State<DefaultPage> {
     List<Widget> widgets = [];
     for (int i = 0; i < count; i++) {
       widgets.add(
-        Container(
-          height: 200,
-          width: 140,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: const Color.fromARGB(199, 57, 52, 62).withOpacity(0.55),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PlaylistPage(
+                    user: _current_user,
+                    playlist: _usersPlaylists[i],
+                    player: _player,
+                    playlistSongs: _playlistSongs[i],
+                  ),
+                ));
+          },
+          child: Container(
+            height: 200,
+            width: 140,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: const Color.fromARGB(199, 57, 52, 62).withOpacity(0.55),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  child: Image(
+                    image: AssetImage('assets/images/cover$i.jpg'),
+                    height: 145,
+                    width: 140,
+                    fit: BoxFit.fill,
+                  ),
                 ),
-                child: Image(
-                  image: AssetImage('assets/images/demopicture1.PNG'),
-                  height: 145,
-                  width: 140,
-                  fit: BoxFit.fill,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 3),
-                child: Center(
-                  child: Text(
-                    'My playlist $i',
-                    style: const TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xf7ffffff),
+                Padding(
+                  padding: const EdgeInsets.only(top: 3),
+                  child: Center(
+                    child: Text(
+                      feelings[i],
+                      style: const TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xf7ffffff),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
@@ -835,7 +861,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                 feelingButton(happy_songs);
                               } else if (_currently_playing.category == 'Sad') {
                                 feelingButton(sad_songs);
-                              } else if (_currently_playing.category == 'Excited') {
+                              } else if (_currently_playing.category ==
+                                  'Excited') {
                                 feelingButton(excited_songs);
                               } else {
                                 feelingButton(angry_songs);
