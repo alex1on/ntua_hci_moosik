@@ -29,7 +29,7 @@ class CircleButton extends StatelessWidget {
             fontFamily: 'Inter',
             fontWeight: FontWeight.w900,
           ),
-        ));
+        ),);
   }
 }
 
@@ -49,73 +49,79 @@ class ChooseSong extends StatelessWidget {
                   color: Colors.black,
                   shape: BoxShape.circle,
                 ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: pixels,
-                      top: pixels,
-                      child: CircleButton(
-                        text: "Happy",
-                        color: const Color(0xfffb5a00),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const WearWatchActive(),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(5, 10, 10, 10),
+                  child: Transform.scale(
+                    scale: 0.9,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            CircleButton(
+                              text: "Happy",
+                              color: const Color(0xfffb5a00),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const WearWatchActive(),
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                    Positioned(
-                      right: pixels,
-                      top: pixels,
-                      child: CircleButton(
-                        text: "Sad",
-                        color: const Color(0xfffb5a00),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const WearWatchActive(),
+                            const Spacer(),
+                            CircleButton(
+                              text: "Sad",
+                              color: const Color(0xfffb5a00),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const WearWatchActive(),
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                    Positioned(
-                      left: pixels,
-                      bottom: pixels,
-                      child: CircleButton(
-                        text: "Excited",
-                        color: const Color(0xfffb5a00),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const WearWatchActive(),
+                          ],
+                        ),
+                        const Spacer(),
+                        Row(
+                          children: [
+                            CircleButton(
+                              text: "Excited",
+                              color: const Color(0xfffb5a00),
+                              onPressed: () {
+                                //send 'Excited' to android
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const WearWatchActive(),
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                    Positioned(
-                      right: pixels,
-                      bottom: pixels,
-                      child: CircleButton(
-                        text: "Angry",
-                        color: const Color(0xfffb5a00),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const WearWatchActive(),
+                            const Spacer(),
+                            CircleButton(
+                              text: "Angry",
+                              color: const Color(0xfffb5a00),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const WearWatchActive(),
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               );
             },
