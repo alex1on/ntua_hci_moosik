@@ -6,6 +6,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:ntua_hci_moosik/Playlist_Page.dart';
 import 'Settings_Page.dart';
 import 'main.dart';
+import 'Search_Page.dart';
 
 class DefaultPage extends StatefulWidget {
   late User user;
@@ -218,6 +219,28 @@ class _DefaultPageState extends State<DefaultPage> {
                                   width: 300,
                                   child: Expanded(
                                     child: TextField(
+                                      onSubmitted: (String searchtext) {
+                                        if (searchtext.isEmpty) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => SearchPage(
+                                                user: _current_user,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => SearchPage(
+                                                user: _current_user,
+                                                searchsong: searchtext,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
                                       style: const TextStyle(
                                         //color: Color(0xfffb5a00),
                                         color:
@@ -835,7 +858,8 @@ class _DefaultPageState extends State<DefaultPage> {
                                 feelingButton(happy_songs);
                               } else if (_currently_playing.category == 'Sad') {
                                 feelingButton(sad_songs);
-                              } else if (_currently_playing.category == 'Excited') {
+                              } else if (_currently_playing.category ==
+                                  'Excited') {
                                 feelingButton(excited_songs);
                               } else {
                                 feelingButton(angry_songs);
