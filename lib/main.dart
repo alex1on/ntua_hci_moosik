@@ -161,6 +161,63 @@ class Song {
         url: '../assets/music/the-passenger.mp3',
         category: 'Happy')
   ];
+
+  // sample data for happy songs
+  static List<Song> Sad_songs = [
+    Song(
+        title: 'Happy',
+        artist: 'Pharell Williams',
+        url: '../assets/music/happy.mp3',
+        category: 'Happy'),
+    Song(
+        title: 'YMCA',
+        artist: 'Village People',
+        url: '../assets/music/ymca.mp3',
+        category: 'Happy'),
+    Song(
+        title: 'The Passenger',
+        artist: 'Iggy Pop',
+        url: '../assets/music/the-passenger.mp3',
+        category: 'Happy')
+  ];
+
+  // sample data for happy songs
+  static List<Song> Excited_songs = [
+    Song(
+        title: 'Happy',
+        artist: 'Pharell Williams',
+        url: '../assets/music/happy.mp3',
+        category: 'Happy'),
+    Song(
+        title: 'YMCA',
+        artist: 'Village People',
+        url: '../assets/music/ymca.mp3',
+        category: 'Happy'),
+    Song(
+        title: 'The Passenger',
+        artist: 'Iggy Pop',
+        url: '../assets/music/the-passenger.mp3',
+        category: 'Happy')
+  ];
+
+  // sample data for happy songs
+  static List<Song> Angry_songs = [
+    Song(
+        title: 'Happy',
+        artist: 'Pharell Williams',
+        url: '../assets/music/happy.mp3',
+        category: 'Happy'),
+    Song(
+        title: 'YMCA',
+        artist: 'Village People',
+        url: '../assets/music/ymca.mp3',
+        category: 'Happy'),
+    Song(
+        title: 'Enemy',
+        artist: 'Imagine Dragons',
+        url: '../assets/music/enemy.mp3',
+        category: 'Angry')
+  ];
 }
 
 /// [SQLiteService] class that implements the application's interface to the DB (SQLite)

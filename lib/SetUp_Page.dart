@@ -23,6 +23,9 @@ class SetUpPage extends StatefulWidget {
 class _SetUpPageState extends State<SetUpPage> {
   int _numSongs = 3;
   List<Song> happy_songs = Song.Happy_songs;
+  List<Song> sad_songs = Song.Sad_songs;
+  List<Song> excited_songs = Song.Excited_songs;
+  List<Song> angry_songs = Song.Angry_songs;
 
   late User _current_user;
   late List<Playlist> _defaultPlaylists;
@@ -56,14 +59,14 @@ class _SetUpPageState extends State<SetUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    // if index > 3, then you are done with set up --> go to default page.
-    if (widget.index > 3) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => DefaultPage(user: _current_user)),
-      );
-    }
+    // // if index > 3, then you are done with set up --> go to default page.
+    // if (widget.index > 3) {
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => DefaultPage(user: _current_user)),
+    //   );
+    // }
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -92,12 +95,39 @@ class _SetUpPageState extends State<SetUpPage> {
                 ),
               ),
               const SizedBox(height: 15),
-              for (int i = 0; i < _numSongs; i++)
-                BuildSongRow(
-                    color: Colors.grey[800],
-                    song: happy_songs[i],
-                    isNotSelected: true,
-                    user: _current_user),
+              for (int i = 0; i < _numSongs; i++) 
+                // _current_index == 0 --> happy
+                if(_current_index == 0) 
+                  BuildSongRow(
+                      color: Colors.grey[800],
+                      song: happy_songs[i],
+                      isNotSelected: true,
+                      user: _current_user
+                  )
+                // _current_index == 1 --> sad
+                else if (_current_index == 1) 
+                  BuildSongRow(
+                      color: Colors.grey[800],
+                      song: sad_songs[i],
+                      isNotSelected: true,
+                      user: _current_user
+                  )
+                // _current_index == 2 --> excited
+                else if (_current_index == 2) 
+                  BuildSongRow(
+                      color: Colors.grey[800],
+                      song: excited_songs[i],
+                      isNotSelected: true,
+                      user: _current_user
+                  )
+                // _current_index == 3 --> angry  
+                else 
+                  BuildSongRow(
+                      color: Colors.grey[800],
+                      song: angry_songs[i],
+                      isNotSelected: true,
+                      user: _current_user
+                  ),
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -108,8 +138,18 @@ class _SetUpPageState extends State<SetUpPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
                         onPressed: () async {
+                          List<Song> current_list;
+                          if (_current_index == 0) {
+                            current_list = happy_songs;
+                          } else if (_current_index == 1) {
+                            current_list = sad_songs;
+                          } else if (_current_index == 2) {
+                            current_list = excited_songs;
+                          } else {
+                            current_list = angry_songs;
+                          }
                           // if there are no other songs left, display proper message
-                          if (_numSongs == happy_songs.length) {
+                          if (_numSongs == current_list.length) {
                             await showDialog<void>(
                               context: context,
                               builder: (BuildContext context) {
@@ -130,9 +170,9 @@ class _SetUpPageState extends State<SetUpPage> {
                             );
                           }
                           // else if there 0-3 left songs, then load them
-                          else if (_numSongs + 3 > happy_songs.length) {
+                          else if (_numSongs + 3 > current_list.length) {
                             setState(() {
-                              _numSongs = happy_songs.length;
+                              _numSongs = current_list.length;
                             });
                           }
                           // else display 3 more songs

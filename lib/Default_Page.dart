@@ -1,6 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:ui';
+import 'package:just_audio/just_audio.dart';
 import 'Settings_Page.dart';
 import 'main.dart';
 
@@ -17,15 +19,84 @@ class _DefaultPageState extends State<DefaultPage> {
   List<Widget> _myWidgets = [];
 
   late User _current_user;
+  late SQLiteService sqLiteService;
+  // List of curent user's playlists
+  List<Playlist> _usersPlaylists = <Playlist>[];
 
+  // Every available song for each category
+  List<Song> happy_songs = Song.Happy_songs;
+  List<Song> sad_songs = Song.Sad_songs;
+  List<Song> excited_songs = Song.Excited_songs;
+  List<Song> angry_songs = Song.Angry_songs;
+
+  // Audio player
+  AudioPlayer _player = AudioPlayer();
+  late Song _currently_playing = Song(title: '', artist: '', url: '', category: '');
 
   @override
   void initState() {
     super.initState();
     _current_user = widget.user;
     _myWidgets = _buildWidgets(4);
+    sqLiteService = SQLiteService();
+    sqLiteService.initDB().whenComplete(() async {
+      final playlists = await sqLiteService.getUserPlaylists(_current_user);
+      setState(() {
+        _usersPlaylists = playlists;
+      });
+    });
   }
 
+  // If you press a #feeling button, a random song of this category will start playing
+  void feelingButton(List<Song> feelingList) async {
+    final random = Random();
+    // pick a random song from the song list
+    final randomSong = feelingList[random.nextInt(feelingList.length)];
+    _currently_playing = randomSong;
+    _player.setAudioSource(
+      AudioSource.uri(
+        Uri.parse('asset:///${randomSong.url}'),
+      ),
+    );
+    await _player.play();
+    // Listen to the player state stream
+    _player.playerStateStream.listen((playerState) async {
+      if (playerState.processingState == ProcessingState.completed) {
+        // Replay another random song from the list
+        final newRandomSong = feelingList[random.nextInt(feelingList.length)];
+        _currently_playing = newRandomSong;
+        _player.setAudioSource(
+          AudioSource.uri(
+            Uri.parse('asset:///${newRandomSong.url}'),
+          ),
+        );
+        await _player.play();
+      }
+    });
+  }
+
+  void Replay() async{
+    await _player.stop();
+    await _player.seek(Duration.zero);
+    await _player.play();
+  }
+
+  @override
+  void dispose() {
+    _player.stop();
+    _player.dispose();
+    super.dispose();
+  }
+
+  // play/pause button
+  void _press() {
+    if (_player.playing) {
+       _player.pause();
+    } else {
+       _player.play();
+    }
+    setState(() {});
+  }
 
   // update _current_user when you come back from a page that changed user
   void _navigateToPage() async {
@@ -40,7 +111,6 @@ class _DefaultPageState extends State<DefaultPage> {
       });
     }
   }
-
 
   List<Widget> _buildWidgets(int count) {
     List<Widget> widgets = [];
@@ -204,7 +274,9 @@ class _DefaultPageState extends State<DefaultPage> {
                     child: Row(
                       children: [
                         ElevatedButton(
-                          onPressed: () async {},
+                          onPressed: () async {
+                            feelingButton(happy_songs);
+                          },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xfffb5a00),
                               shape: RoundedRectangleBorder(
@@ -229,7 +301,9 @@ class _DefaultPageState extends State<DefaultPage> {
                         ),
                         const Spacer(),
                         ElevatedButton(
-                          onPressed: () async {},
+                          onPressed: () async {
+                            feelingButton(sad_songs);
+                          },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xfffb5a00),
                               shape: RoundedRectangleBorder(
@@ -261,7 +335,9 @@ class _DefaultPageState extends State<DefaultPage> {
                     child: Row(
                       children: [
                         ElevatedButton(
-                          onPressed: () async {},
+                          onPressed: () async {
+                            feelingButton(excited_songs);
+                          },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xfffb5a00),
                               shape: RoundedRectangleBorder(
@@ -286,7 +362,9 @@ class _DefaultPageState extends State<DefaultPage> {
                         ),
                         const Spacer(),
                         ElevatedButton(
-                          onPressed: () async {},
+                          onPressed: () async {
+                            feelingButton(angry_songs);
+                          },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xfffb5a00),
                               shape: RoundedRectangleBorder(
@@ -540,14 +618,20 @@ class _DefaultPageState extends State<DefaultPage> {
                               ),
                             ),
                             IconButton(
-                              icon: const Icon(
-                                Icons.play_arrow,
-                                color: Color(0xfffb5a00),
-                                size: 100,
-                              ),
-                              onPressed: () {
-                                // todo: Play song
-                              },
+                              onPressed: _press,
+                              // if  player is not playing a song then the icon is play
+                              icon: !_player.playing
+                                  ? const Icon(
+                                      Icons.play_arrow,
+                                      color: Color(0xfffb5a00),
+                                      size: 100,
+                                    )
+                                  // otherwise it is pause
+                                  : const Icon(
+                                      Icons.pause,
+                                      color: Color(0xfffb5a00),
+                                      size: 100,
+                                    ),
                             ),
                           ],
                         ),
@@ -651,18 +735,18 @@ class _DefaultPageState extends State<DefaultPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children:  [
                         Text(
-                          'Song Name',
-                          style: TextStyle(
+                          _currently_playing.title,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
                         ),
                         Text(
-                          'Artist',
-                          style: TextStyle(
+                          _currently_playing.artist,
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
@@ -677,25 +761,29 @@ class _DefaultPageState extends State<DefaultPage> {
                     child: Row(
                       children: [
                         IconButton(
-                          icon: const Icon(
-                            Icons.play_arrow,
-                            color: Color(0xfffb5a00),
-                            size: 36,
-                          ),
-                          onPressed: () {
-                            // todo: Play song
-                          },
+                          icon: _player.playing
+                              ? const Icon(
+                                  Icons.pause,
+                                  color: Color(0xfffb5a00),
+                                  size: 36,
+                                )
+                              : const Icon(
+                                  Icons.play_arrow,
+                                  color: Color(0xfffb5a00),
+                                  size: 36,
+                                ),
+                          onPressed: _press,
                         ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.skip_previous,
-                            color: Color(0xfffb5a00),
-                            size: 36,
-                          ),
-                          onPressed: () {
-                            // todo: Play song
-                          },
-                        ),
+                        // IconButton(
+                        //   icon: const Icon(
+                        //     Icons.skip_previous,
+                        //     color: Color(0xfffb5a00),
+                        //     size: 36,
+                        //   ),
+                        //   onPressed: () {
+                        //     // todo: Play song
+                        //   },
+                        // ),
                         IconButton(
                           icon: const Icon(
                             Icons.skip_next,
@@ -703,7 +791,18 @@ class _DefaultPageState extends State<DefaultPage> {
                             size: 36,
                           ),
                           onPressed: () {
-                            // todo: Play song
+                            if(_currently_playing.category == 'Happy') {
+                              feelingButton(happy_songs);
+                            }
+                            else if(_currently_playing.category == 'Sad') {
+                              feelingButton(sad_songs);
+                            }
+                            else if(_currently_playing.category == 'Excited') {
+                              feelingButton(excited_songs);
+                            }
+                            else {
+                              feelingButton(angry_songs);
+                            }
                           },
                         ),
                         IconButton(
@@ -713,7 +812,7 @@ class _DefaultPageState extends State<DefaultPage> {
                             size: 36,
                           ),
                           onPressed: () {
-                            // todo: Play song
+                            Replay();
                           },
                         ),
                       ],
