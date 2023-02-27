@@ -1,31 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wear/wear.dart';
+import 'package:ntua_hci_moosik/wearos/Build_Song_Wear.dart';
 
-/*class WearWatchAmbient extends StatefulWidget {
-  const WearWatchAmbient({Key? key}) : super(key: key);
-
-  @override
-  State<WearWatchAmbient> createState() => _WearWatchAmbientState();
-}
-
-class _WearWatchAmbientState extends State<WearWatchAmbient> {
-  @override
-  Widget build(BuildContext context) => WatchShape(
-        builder: (BuildContext context, WearShape shape, Widget? child) {
-          return const Scaffold(
-            backgroundColor: Colors.black,
-            body: Center(
-              child: Text('test'),
-            ),
-          );
-        },
-      );
-}
-*/
 class WearWatchAmbient extends StatelessWidget {
-
-
-  const WearWatchAmbient( {Key? key}) : super(key: key);
+  const WearWatchAmbient({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,24 +15,13 @@ class WearWatchAmbient extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    'Shape: ${shape == WearShape.round ? 'round' : 'square'}',
-                  ),
-                  child!,
+                  BuildSongWear(color: const Color(0xfffb5a00), title: 'Song Title'),
                 ],
               );
             },
-            child: AmbientMode(
-              builder: (BuildContext context, WearMode mode, Widget? child) {
-                return Text(
-                  'Mode: ${mode == WearMode.active ? 'Active' : 'Ambient'}',
-                );
-              },
-            ),
           ),
         ),
       ),
     );
   }
 }
-

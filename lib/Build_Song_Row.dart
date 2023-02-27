@@ -22,7 +22,6 @@ class BuildSongRow extends StatefulWidget {
 
 class BuildSongRowState extends State<BuildSongRow> {
   AudioPlayer _player = AudioPlayer();
-  late bool _isPlaying;
   late Song _song = widget.song;
   late User _user;
 
@@ -31,7 +30,6 @@ class BuildSongRowState extends State<BuildSongRow> {
   /// [_category] and [_playlistID] will be used to insert/delete songs to/from playlist
   late String _category;
   late int _playlistID;
-
 
   @override
   void initState() {
@@ -44,7 +42,6 @@ class BuildSongRowState extends State<BuildSongRow> {
         Uri.parse('asset:///${_song.url}'),
       ),
     );
-    _isPlaying = _player.playing;
     sqLiteService = SQLiteService();
     sqLiteService.initDB().whenComplete(() async {
       final playlistID = await sqLiteService.getPlaylistID(_user.id, _category);
@@ -61,41 +58,49 @@ class BuildSongRowState extends State<BuildSongRow> {
     super.dispose();
   }
 
-  void _press() async {
-    if (_isPlaying) {
-      await _player.pause();
+  void _press() {
+    if (_player.playing) {
+       _player.pause();
     } else {
-      await _player.play();
+      _player.play();
     }
-    setState(() {
-      _isPlaying = _player.playing;
-      // Listen to the player state stream
-      _player.playerStateStream.listen((playerState) {
-        if (playerState.processingState == ProcessingState.completed) {
-          // Replay the song from the start
-          _player.seek(Duration.zero);
-          _player.play();
-        }
-      });
-    });
+    setState(
+      () {
+        // Listen to the player state stream
+        _player.playerStateStream.listen(
+          (playerState) {
+            if (playerState.processingState == ProcessingState.completed) {
+              // Replay the song from the start
+              _player.seek(Duration.zero);
+              _player.play();
+            }
+          },
+        );
+      },
+    );
   }
 
-  void AddSong () async {
-    await sqLiteService.addSong(Song(title: _song.title, artist: _song.artist, url: _song.url, category: _song.category, playlistID: _playlistID));
+  void AddSong() async {
+    await sqLiteService.addSong(Song(
+        title: _song.title,
+        artist: _song.artist,
+        url: _song.url,
+        category: _song.category,
+        playlistID: _playlistID));
   }
 
-  void RemoveSong () async {
-    int SongID = await sqLiteService.getSongID(_song.title, _song.artist, _song.url, _song.category, _playlistID);
+  void RemoveSong() async {
+    int SongID = await sqLiteService.getSongID(
+        _song.title, _song.artist, _song.url, _song.category, _playlistID);
     await sqLiteService.deleteSong(SongID);
   }
 
   void _select() {
     setState(() {
       // If add button is not selected, then you select it now, so add the song into the db
-      if(widget.isNotSelected) {
-         AddSong();
-      }
-      else {
+      if (widget.isNotSelected) {
+        AddSong();
+      } else {
         // Otherwise, remove it from the db
         RemoveSong();
       }
@@ -158,8 +163,7 @@ class BuildSongRowState extends State<BuildSongRow> {
               Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: IconButton(
-                  onPressed: _press,
-                  icon: _isPlaying
+                  icon: _player.playing
                       ? const Icon(
                           Icons.pause,
                           color: Color(0xfffb5a00),
@@ -170,6 +174,7 @@ class BuildSongRowState extends State<BuildSongRow> {
                           color: Color(0xfffb5a00),
                           size: 36,
                         ),
+                  onPressed: _press,
                 ),
               ),
             ],
