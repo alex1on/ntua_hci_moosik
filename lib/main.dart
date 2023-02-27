@@ -109,7 +109,6 @@ class Song {
   String title;
   String artist;
   String url;
-  String category;
   String? type;
   String? tag2;
   String? tag3;
@@ -121,7 +120,6 @@ class Song {
       required this.title,
       required this.artist,
       required this.url,
-      required this.category,
       this.type,
       this.tag2,
       this.tag3,
@@ -133,7 +131,6 @@ class Song {
         title = song['title'],
         artist = song['artist'],
         url = song['url'],
-        category = song['category'],
         type = song['type'],
         tag2 = song['tag2'],
         tag3 = song['tag3'],
@@ -146,7 +143,6 @@ class Song {
       'title': title,
       'artist': artist,
       'url': url,
-      'category': category,
       'type': type,
       'tag2': tag2,
       'tag3': tag3,
@@ -155,83 +151,585 @@ class Song {
     return record;
   }
 
-  // sample data for happy songs
-  static List<Song> Happy_songs = [
+  static List<Song> Songs = [
     Song(
-        title: 'Happy',
-        artist: 'Pharell Williams',
-        url: '../assets/music/happy.mp3',
-        category: 'Happy'),
+      title: 'The winner takes it all',
+      artist: 'ABBA',
+      url: '../assets/music/ABBA - The Winner Takes It All.mp3',
+      type: 'Pop',
+      tag2: 'Regret',
+      tag3: 'Heartbreak',
+    ),
     Song(
-        title: 'YMCA',
-        artist: 'Village People',
-        url: '../assets/music/ymca.mp3',
-        category: 'Happy'),
+      title: 'Someone Like You',
+      artist: 'Adele',
+      url: '../assets/music/Adele - Rolling in the Deep.mp3',
+      type: 'Pop',
+      tag2: 'Reflective',
+      tag3: 'Heartbreak',
+    ),
     Song(
-        title: 'The Passenger',
-        artist: 'Iggy Pop',
-        url: '../assets/music/the-passenger.mp3',
-        category: 'Happy')
-  ];
-
-  // sample data for happy songs
-  static List<Song> Sad_songs = [
+      title: 'Rolling in the Deep',
+      artist: 'Adele',
+      url: '../assets/music/Adele - Someone Like You.mp3',
+      type: 'Pop',
+      tag2: 'Soulful',
+      tag3: 'Heartbreak',
+    ),
     Song(
-        title: 'Happy',
-        artist: 'Pharell Williams',
-        url: '../assets/music/happy.mp3',
-        category: 'Happy',
-        type: 'pop',
-        tag2: 'Party',
-        tag3: 'Feel-Good'),
+      title: 'Respect',
+      artist: 'Aretha Franklin',
+      url: '../assets/music/Aretha Franklin - Respect.mp3',
+      type: 'Soul',
+      tag2: 'Empowerment',
+      tag3: 'Classic',
+    ),
     Song(
-        title: 'YMCA',
-        artist: 'Village People',
-        url: '../assets/music/ymca.mp3',
-        category: 'Happy'),
+      title: 'Therefore I Am',
+      artist: 'Bilie Eilish',
+      url: '../assets.musicBillie Eilish - Therefore I Am.mp3',
+      type: 'Alternative',
+      tag2: 'Catchy',
+      tag3: 'Confident',
+    ),
     Song(
-        title: 'The Passenger',
-        artist: 'Iggy Pop',
-        url: '../assets/music/the-passenger.mp3',
-        category: 'Happy')
-  ];
-
-  // sample data for happy songs
-  static List<Song> Excited_songs = [
+      title: 'The Scientist',
+      artist: 'Coldplay',
+      url: '../assets/music/Coldplay - Fix You.mp3',
+      type: 'Pop',
+      tag2: 'Love',
+      tag3: 'Heartbreak',
+    ),
     Song(
-        title: 'Happy',
-        artist: 'Pharell Williams',
-        url: '../assets/music/happy.mp3',
-        category: 'Happy'),
+      title: 'Fix You',
+      artist: 'Coldplay',
+      url: '../assets/music/Coldplay - The Scientist.mp3',
+      type: 'Alternative',
+      tag2: 'Melancholy',
+      tag3: 'Uplifting',
+    ),
     Song(
-        title: 'YMCA',
-        artist: 'Village People',
-        url: '../assets/music/ymca.mp3',
-        category: 'Happy'),
+      title: 'Take Five',
+      artist: 'Dave Brubeck',
+      url: '../assets/music/Dave Brubeck - Take Five.mp3',
+      type: 'Jazz',
+      tag2: 'Soulful',
+      tag3: 'Smooth',
+    ),
     Song(
-        title: 'The Passenger',
-        artist: 'Iggy Pop',
-        url: '../assets/music/the-passenger.mp3',
-        category: 'Happy')
-  ];
-
-  // sample data for happy songs
-  static List<Song> Angry_songs = [
+      title: 'You Never Even Called Me by My Name',
+      artist: 'David Allen Coe',
+      url:
+          '../assets/music/David Allen Coe You Never Even Called Me by My Name.mp3',
+      type: 'Country',
+      tag2: 'Storytelling',
+      tag3: 'Heartbreak',
+    ),
     Song(
-        title: 'Happy',
-        artist: 'Pharell Williams',
-        url: '../assets/music/happy.mp3',
-        category: 'Happy'),
+      title: 'Golden Years',
+      artist: 'David Bowie',
+      url: '../assets/music/David Bowie - Golden Years.mp3',
+      type: 'Pop',
+      tag2: 'Danceable',
+      tag3: 'Classic',
+    ),
     Song(
-        title: 'YMCA',
-        artist: 'Village People',
-        url: '../assets/music/ymca.mp3',
-        category: 'Happy'),
+      title: 'Down With The Sickness',
+      artist: 'Disturbed',
+      url: '../assets/music/Disturbed - Down With The Sickness.mp3',
+      type: 'Heavy Metal',
+      tag2: 'Aggression',
+      tag3: 'Darkness',
+    ),
     Song(
-        title: 'Enemy',
-        artist: 'Imagine Dragons',
-        url: '../assets/music/enemy.mp3',
-        category: 'Angry')
+      title: 'The Sound of Silence',
+      artist: 'Disturbed',
+      url: '../assets/music/Disturbed - The Sound Of Silence.mp3',
+      type: 'Folk ',
+      tag2: 'Reflective',
+      tag3: 'Melancholy',
+    ),
+    Song(
+      title: 'Bodies',
+      artist: 'Drowning Pool',
+      url: '../assets/music/Drowning Pool - Bodies.mp3',
+      type: 'Heavy Metal',
+      tag2: 'Aggression',
+      tag3: 'Raw',
+    ),
+    Song(
+      title: 'Levitating',
+      artist: 'Dua Lipa ft. DaBaby',
+      url: '../assets/music/Dua Lipa - Levitating Featuring DaBaby.mp3',
+      type: 'Pop',
+      tag2: 'Danceable',
+      tag3: 'Fun',
+    ),
+    Song(
+      title: 'The Way I am',
+      artist: 'Eminem',
+      url: '../assets/music/Eminem - The Way I Am.mp3',
+      type: 'Hip-Hop',
+      tag2: 'Aggression',
+      tag3: 'Introspective',
+    ),
+    Song(
+      title: 'Mockingbird',
+      artist: 'Eminem',
+      url: '../assets/music/Eminem - Mockingbird.mp3',
+      type: 'Hip-Hop',
+      tag2: 'Emotional',
+      tag3: 'Storytelling',
+    ),
+    Song(
+      title: 'Lose Yourself',
+      artist: 'Eminem',
+      url: '../assets/music/Eminem - Lose Yourself.mp3',
+      type: 'Hip-Hop',
+      tag2: 'Inspirational',
+      tag3: 'Motivational',
+    ),
+    Song(
+      title: 'Stan',
+      artist: 'Eminem ft. Dido',
+      url: '../assets/music/Eminem - Stan (Long Version) ft. Dido.mp3',
+      type: 'Hip-Hop',
+      tag2: 'Emotional',
+      tag3: 'Storytelling',
+    ),
+    Song(
+      title: 'Tears in Heaven',
+      artist: 'Eric Clapton',
+      url: '../assets/music/Eric Clapton - Tears In Heaven.mp3',
+      type: 'Rock',
+      tag2: 'Grief ',
+      tag3: 'Loss',
+    ),
+    Song(
+      title: 'My Immortal',
+      artist: 'Evanescence',
+      url: '../assets/music/Evanescence - My Immortal.mp3',
+      type: 'Rock',
+      tag2: 'Sadness',
+      tag3: 'Introspective',
+    ),
+    Song(
+      title: 'Dreams',
+      artist: 'Fleetwood Mac',
+      url: '../assets/music/Fleetwood Mac - Dreams.mp3',
+      type: 'Rock',
+      tag2: 'Emotional',
+      tag3: 'Power Ballad',
+    ),
+    Song(
+      title: 'Landslide',
+      artist: 'Fleetwood Mac',
+      url: '../assets/music/Fleetwood Mac - Landslide.mp3',
+      type: 'Folk',
+      tag2: 'Nostalgia',
+      tag3: 'Melancholy',
+    ),
+    Song(
+      title: 'The Pretender',
+      artist: 'Foo Fighters',
+      url: '../asset/music/Foo Fighters - The Pretender.mp3',
+      type: 'Alternative Rock',
+      tag2: 'Aggression',
+      tag3: 'Rebellion',
+    ),
+    Song(
+      title: 'Pumped Up Kicks',
+      artist: 'Foster The People',
+      url: '../assets/music/Foster The People - Pumped Up Kicks.mp3',
+      type: 'Indie Pop',
+      tag2: 'Catchy',
+      tag3: 'Social Commentary',
+    ),
+    Song(
+      title: 'Crazy',
+      artist: 'Gnarls Barkley',
+      url: '../assets/music/Gnarls Barkley - Crazy.mp3',
+      type: 'Neo Soul',
+      tag2: 'Catchy',
+      tag3: 'Quirky',
+    ),
+    Song(
+      title: 'The Message',
+      artist: 'Grandmaster Flash & The Furious Five',
+      url:
+          '../assets/music/Grandmaster Flash & The Furious Five - The Message.mp3',
+      type: 'Old School Hip Hop',
+      tag2: 'Social Commentary',
+      tag3: 'Classic',
+    ),
+    Song(
+      title: 'November Rain',
+      artist: 'Guns N\' Roses',
+      url: '../assets/music/Guns N\' Roses - November Rain.mp3',
+      type: 'Rock',
+      tag2: 'Epic',
+      tag3: 'Hope',
+    ),
+    Song(
+      title: 'It Was A Good Day',
+      artist: 'Ice Cube',
+      url: '../assets/music/Ice Cube - It Was A Good Day.mp3',
+      type: 'West Coast Hip Hop',
+      tag2: 'Storytelling',
+      tag3: 'Classic',
+    ),
+    Song(
+      title: 'Hallelujah',
+      artist: 'Jeff Buckey',
+      url: '../assets/music/Jeff Buckley - Hallelujah.mp3',
+      type: 'Folk',
+      tag2: 'Melancholy',
+      tag3: 'Spiritual',
+    ),
+    Song(
+      title: 'Don\'t Stop Believin\'',
+      artist: 'Journey',
+      url: '../assets/music/Journey - Don\'t Stop Believin\'.mp3',
+      type: 'Rock',
+      tag2: 'Hope',
+      tag3: 'Motivational',
+    ),
+    Song(
+      title: 'HUMBLE',
+      artist: 'Kendrick Lamar',
+      url: '../assets/music/Kendrick Lamar - HUMBLE..mp3',
+      type: 'Hip-Hop',
+      tag2: 'Aggression',
+      tag3: 'Confident',
+    ),
+    Song(
+      title: 'All I Want',
+      artist: 'Kodaline',
+      url: '../assets/music/Kodaline - All I Want (Part 1).mp3',
+      type: 'Indie Folk',
+      tag2: 'Yearning',
+      tag3: 'Heartbreak',
+    ),
+    Song(
+      title: 'Summertime Sadness',
+      artist: 'Lana Del Rey',
+      url: '../assets/music/Lana Del Rey - Summertime Sadness.mp3',
+      type: 'Pop',
+      tag2: 'Melancholy',
+      tag3: 'Love',
+    ),
+    Song(
+      title: 'Video Games',
+      artist: 'Lana Del Rey',
+      url: '../assets/music/Lana Del Rey - Video Games.mp3',
+      type: 'Pop',
+      tag2: 'Melancholy',
+      tag3: 'Dreamy',
+    ),
+    Song(
+      title: 'Born To Die',
+      artist: 'Lana Del Rey',
+      url: '../assets/music/Lana Del Rey - Born To Die.mp3',
+      type: 'Pop',
+      tag2: 'Melancholy',
+      tag3: 'Fatalistic',
+    ),
+    Song(
+      title: 'Kashmir',
+      artist: 'Led Zeppelin',
+      url: '../assets/music/Kashmir - Led Zeppelin.mp3',
+      type: 'Rock',
+      tag2: 'Epic',
+      tag3: 'Exotic',
+    ),
+    Song(
+      title: 'Stairway To Heaven',
+      artist: 'Led Zeppelin',
+      url: '../assets/music/Led Zeppelin - Stairway To Heaven.mp3',
+      type: 'Rock',
+      tag2: 'Epic',
+      tag3: 'Classic',
+    ),
+    Song(
+      title: 'Break Stuff',
+      artist: 'Limp Bizkit',
+      url: '../assets/music/Limp Bizkit - Break Stuff.mp3',
+      type: 'Nu metal',
+      tag2: 'Aggression',
+      tag3: 'Dissatisfaction',
+    ),
+    Song(
+      title: 'Numb',
+      artist: 'Linkin Park',
+      url: '../assets/music/Linkin Park - Numb.mp3',
+      type: 'Alternative Rock',
+      tag2: 'Numbness',
+      tag3: 'Despair',
+    ),
+    Song(
+      title: 'The Night We Met',
+      artist: 'Lord Huron',
+      url: '../assets/music/Lord Huron - The Night We Met.mp3',
+      type: 'Indie Rock',
+      tag2: 'Melancholy',
+      tag3: 'Romantic',
+    ),
+    Song(
+      title: 'Weightless',
+      artist: 'Marconi Union',
+      url: '../assets/music/Marconi Union - Weightless.mp3',
+      type: 'Ambient',
+      tag2: 'Calming',
+      tag3: 'Relaxing',
+    ),
+    Song(
+      title: "What's Going On",
+      artist: 'Marvin Gaye',
+      url: '../assets/music/Marvin Gaye - What\'s Going On.mp3',
+      type: 'Soul',
+      tag2: 'Protest',
+      tag3: 'Classic',
+    ),
+    Song(
+      title: 'Thriller',
+      artist: 'Michael Jackson',
+      url: '../assets/music/Michael Jackson - Thriller.mp3',
+      type: 'Pop',
+      tag2: 'Smooth',
+      tag3: 'Classic',
+    ),
+    Song(
+      title: 'Porcelain',
+      artist: 'Moby',
+      url: '../assets/music/Moby - Porcelain.mp3',
+      type: 'Electronic',
+      tag2: 'Calming',
+      tag3: 'Ambient',
+    ),
+    Song(
+      title: 'Sweet Caroline',
+      artist: 'Neil Diamond',
+      url: '../assets/music/Neil Diamond - Sweet Caroline.mp3',
+      type: 'Pop',
+      tag2: 'Sing-Along',
+      tag3: 'Feel-Good',
+    ),
+    Song(
+      title: 'Feeling Good',
+      artist: 'Nina Simone',
+      url: '../assets/music/Nina Simone  Feeling Good.mp3',
+      type: 'Jazz',
+      tag2: 'Soulful',
+      tag3: 'Powerful',
+    ),
+    Song(
+      title: "Driver's License",
+      artist: 'Olivia Rodrigo',
+      url: '../assets/music/Olivia Rodrigo - drivers license.mp3',
+      type: 'Pop',
+      tag2: 'Heartfelt',
+      tag3: 'Heartbreak',
+    ),
+    Song(
+      title: 'Bohemian Rhapsody',
+      artist: 'Queen',
+      url: '../assets/music/Queen  Bohemian Rhapsody.mp3',
+      type: 'Rock',
+      tag2: 'Epic',
+      tag3: 'Nostalgia',
+    ),
+    Song(
+      title: 'Everybody Hurts',
+      artist: 'R.E.M.',
+      url: '../assets/music/R.E.M. - Everybody Hurts.mp3',
+      type: 'Rock',
+      tag2: 'Sadness',
+      tag3: 'Hope',
+    ),
+    Song(
+      title: 'How To Disappear Completely',
+      artist: 'Radiohead',
+      url: '../assets/music/Radiohead - How To Disappear Completely.mp3',
+      type: 'Alternative Rock',
+      tag2: 'Existential',
+      tag3: 'Despair',
+    ),
+    Song(
+      title: 'Bulls On Parade',
+      artist: 'Rage Against The Machine',
+      url: '../assets/music/Rage Against The Machine - Bulls On Parade.mp3',
+      type: 'Rock',
+      tag2: 'Rage',
+      tag3: 'Protest',
+    ),
+    Song(
+      title: 'Killing In The Name',
+      artist: 'Rage Against The Machine',
+      url: '../assets/music/Rage Against The Machine - Killing In the Name.mp3',
+      type: 'Rock',
+      tag2: 'Rage',
+      tag3: 'Rebellion',
+    ),
+    Song(
+      title: 'Unchained Melody',
+      artist: 'Righteous Brothers',
+      url: '../assets/music/Righteous Brothers - Unchained Melody.mp3',
+      type: 'Pop',
+      tag2: 'Love',
+      tag3: 'Longing',
+    ),
+    Song(
+      title: 'Dancing On My Own',
+      artist: 'Robyn',
+      url: '../assets/music/Robyn - Dancing On My Own.mp3',
+      type: 'Pop',
+      tag2: 'Empowerment',
+      tag3: 'Heartbreak',
+    ),
+    Song(
+      title: 'The Sound of Silence',
+      artist: 'Simon & Garfunkel',
+      url: '../assets/music/Simon & Garfunkel - The Sounds of Silence.mp3',
+      type: 'Folk',
+      tag2: 'Melancholy',
+      tag3: 'Nostalgia',
+    ),
+    Song(
+      title: 'Nothing Compares 2 U',
+      artist: 'Sinéad O\'Connor',
+      url: '../assets/music/Sinéad O\'Connor - Nothing Compares 2 U.mp3',
+      type: 'Pop',
+      tag2: 'Melancholy',
+      tag3: 'Heartbreak',
+    ),
+    Song(
+      title: 'Saturn',
+      artist: 'Sleeping At Last',
+      url: '../assets/music/Sleeping At Last - Saturn.mp3',
+      type: 'Indie Pop',
+      tag2: 'Calming',
+      tag3: 'Emotional',
+    ),
+    Song(
+      title: 'Before I Forget',
+      artist: 'Slipknot',
+      url: '../assets/music/Slipknot - Before I Forget.mp3',
+      type: 'Alternative Rock',
+      tag2: 'Rage',
+      tag3: 'Fury',
+    ),
+    Song(
+      title: 'Gin & Juice',
+      artist: 'Snoop Dogg',
+      url: '../assets/music/Snoop Dogg - Gin & Juice.mp3',
+      type: 'West Coast Hip Hop',
+      tag2: 'Party',
+      tag3: 'Classic',
+    ),
+    Song(
+      title: 'Superstition',
+      artist: 'Stevie Wonder',
+      url: '../assets/music/Stevie Wonder Superstition.mp3',
+      type: 'Funk',
+      tag2: 'Upbeat',
+      tag3: 'Groovy',
+    ),
+    Song(
+      title: 'Chop Suey!',
+      artist: 'System Of A Down ',
+      url: '../assets/music/System Of A Down - Chop Suey!.mp3',
+      type: 'Alternative Metal',
+      tag2: 'Aggression',
+      tag3: 'Intensity',
+    ),
+    Song(
+      title: 'I Want To Hold Your Hand',
+      artist: 'The Beatles',
+      url: '../assets/music/The Beatles - I Want To Hold Your Hand.mp3',
+      type: 'Pop',
+      tag2: 'Catchy',
+      tag3: 'Love',
+    ),
+    Song(
+      title: 'Hey Jude',
+      artist: 'The Beatles',
+      url: '../assetsmusic/The Beatles - Hey Jude.mp3',
+      type: 'Pop',
+      tag2: 'Sing-Along',
+      tag3: 'Hope',
+    ),
+    Song(
+      title: 'How to Save a Life',
+      artist: 'The Fray',
+      url: '../assets/music/The Fray - How to Save a Life.mp3',
+      type: 'Alternative',
+      tag2: 'Introspective',
+      tag3: 'Emotional',
+    ),
+    Song(
+      title: 'Juicy',
+      artist: 'The Notorious B.I.G.',
+      url: '../assets/music/The Notorious B.I.G. - Juicy.mp3',
+      type: 'Hip-Hop',
+      tag2: 'Nostalgia',
+      tag3: 'Inspirational',
+    ),
+    Song(
+      title: 'Hypnotize',
+      artist: 'The Notorious B.I.G.',
+      url: '../assets/music/The Notorious B.I.G. - Hypnotize.mp3',
+      type: 'Hip-Hop',
+      tag2: 'Smooth',
+      tag3: 'Classic',
+    ),
+    Song(
+      title: 'Hypnotize',
+      artist: 'The Notorious B.I.G.',
+      url: '../assets/music/The Notorious B.I.G. - Hypnotize.mp3',
+      type: 'Hip-Hop',
+      tag2: 'Smooth',
+      tag3: 'Classic',
+    ),
+    Song(
+      title: 'Save Your Tears',
+      artist: 'The Weeknd',
+      url: '../assets/music/The Weeknd - Save Your Tears.mp3',
+      type: 'Pop',
+      tag2: 'Heartfelt',
+      tag3: 'Emotional',
+    ),
+    Song(
+      title: 'Blinding Lights',
+      artist: 'The Weeknd',
+      url: '../assets/usic/The Weeknd - Blinding Lights.mp3',
+      type: 'Pop',
+      tag2: 'Upbeat',
+      tag3: '80s-Inspired',
+    ),
+    Song(
+      title: 'Regulate',
+      artist: 'Warren G',
+      url: '../assets/music/Warren G - Regulate ft. Nate Dogg.mp3',
+      type: 'Hip-Hop',
+      tag2: 'Smooth',
+      tag3: 'Protest',
+    ),
+    Song(
+      title: 'I Will Always Love You',
+      artist: 'Whitney Houston',
+      url: '../assets/music/Whitney Houston - I Will Always Love You.mp3',
+      type: 'Pop',
+      tag2: 'Love',
+      tag3: 'Heartbreak',
+    ),
+    Song(
+      title: 'Unsteady',
+      artist: 'X Ambassadors',
+      url: '../assets/music/X Ambassadors - Unsteady.mp3',
+      type: 'Alternative Rock',
+      tag2: 'Uplifting',
+      tag3: 'Emotional',
+    ),
   ];
 }
 
@@ -460,7 +958,7 @@ class SQLiteService {
   }
 
   // returns a list of playlist's songs
-  Future<List<Song>> getPlaylistSongs (Playlist playlist) async {
+  Future<List<Song>> getPlaylistSongs(Playlist playlist) async {
     final db = await initDB();
 
     final List<Map<String, Object?>> queryResult = await db.query(
@@ -472,9 +970,9 @@ class SQLiteService {
     return queryResult.map((e) => Song.fromMap(e)).toList();
   }
 
-  /// searchs for playlist with userID = [userID] and title = [title] 
+  /// searchs for playlist with userID = [userID] and title = [title]
   /// if such a playlist exists, then it returns its id. Otherwise, -1 is returned
-  Future<int> getPlaylistID(int ?userID, String title) async {
+  Future<int> getPlaylistID(int? userID, String title) async {
     final db = await initDB();
 
     final List<Map<String, dynamic>> queryResult = await db.query(
@@ -492,12 +990,14 @@ class SQLiteService {
 
   /// searchs for a specific song
   /// if such a song exists, then it returns its id. Otherwise, -1 is returned
-  Future<int> getSongID(String ?title, String ?artist, String ?url, String ?category, int ?playlistID) async {
+  Future<int> getSongID(String? title, String? artist, String? url,
+      String? category, int? playlistID) async {
     final db = await initDB();
 
     final List<Map<String, dynamic>> queryResult = await db.query(
       'songs',
-      where: 'title = ? AND artist = ? AND url = ? AND category = ? AND playlistID = ?',
+      where:
+          'title = ? AND artist = ? AND url = ? AND category = ? AND playlistID = ?',
       whereArgs: [title, artist, url, category, playlistID],
     );
 
@@ -507,6 +1007,4 @@ class SQLiteService {
       return -1;
     }
   }
-
 }
-
