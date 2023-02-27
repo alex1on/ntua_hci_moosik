@@ -187,7 +187,7 @@ class Song {
     Song(
       title: 'Therefore I Am',
       artist: 'Bilie Eilish',
-      url: '../assets.musicBillie Eilish - Therefore I Am.mp3',
+      url: '../assets/music/Billie Eilish - Therefore I Am.mp3',
       type: 'Alternative',
       tag2: 'Catchy',
       tag3: 'Confident',
@@ -332,7 +332,7 @@ class Song {
     Song(
       title: 'The Pretender',
       artist: 'Foo Fighters',
-      url: '../asset/music/Foo Fighters - The Pretender.mp3',
+      url: '../assets/music/Foo Fighters - The Pretender.mp3',
       type: 'Alternative Rock',
       tag2: 'Aggression',
       tag3: 'Rebellion',
@@ -653,7 +653,7 @@ class Song {
     Song(
       title: 'Hey Jude',
       artist: 'The Beatles',
-      url: '../assetsmusic/The Beatles - Hey Jude.mp3',
+      url: '../assets/music/The Beatles - Hey Jude.mp3',
       type: 'Pop',
       tag2: 'Sing-Along',
       tag3: 'Hope',
@@ -701,7 +701,7 @@ class Song {
     Song(
       title: 'Blinding Lights',
       artist: 'The Weeknd',
-      url: '../assets/usic/The Weeknd - Blinding Lights.mp3',
+      url: '../assets/music/The Weeknd - Blinding Lights.mp3',
       type: 'Pop',
       tag2: 'Upbeat',
       tag3: '80s-Inspired',
@@ -1005,6 +1005,144 @@ class SQLiteService {
       return queryResult.first['id'];
     } else {
       return -1;
+    }
+  }
+
+  List<String> Tags = [
+    'Heavy Metal',
+    'Hip-Hop',
+    'Nu metal',
+    'Electronic',
+    'Ambient',
+    'Indie Pop',
+    'Neo Soul',
+    'Pop',
+    'Alternative Metal',
+    'Alternative',
+    'Rock',
+    'Soul',
+    'Alternative Rock',
+    'Folk',
+    'Indie Rock',
+    'West Coast Hip Hop',
+    'Old School Hip Hop',
+    'Jazz',
+    'Country',
+    'Indie Folk ',
+    'Aggression',
+    '80s-Inspired',
+    'Ambient',
+    'Classic',
+    'Calming',
+    'Confident',
+    'Catchy',
+    'Darkness',
+    'Chaos',
+    'Despaire',
+    'Collaboration',
+    'Dissatisfaction',
+    'Cool',
+    'Dreamy',
+    'Danceable',
+    'Exotic',
+    'Emotional',
+    'Fatalistic',
+    'Empowerment',
+    'Feel-Good',
+    'Epic',
+    'Fun',
+    'Existential',
+    'Fury',
+    'Frustration',
+    'Groovy',
+    'Grief',
+    'Heartbreak',
+    'Heartfelt',
+    'Halloween',
+    'Hope',
+    'Intensity',
+    'Inspirational',
+    'Longing',
+    'Introspective',
+    'Loss',
+    'Love',
+    'Motivational',
+    'Melancholy',
+    'Power Ballad',
+    'Melodramatic',
+    'Powerful',
+    'Nostalgia',
+    'Quirky',
+    'Numbness',
+    'Raw',
+    'Party',
+    'Rebellion',
+    'Protest',
+    'Relaxing',
+    'Rage',
+    'Romantic',
+    'Reflective',
+    'Spiritual',
+    'Regret',
+    'Sadness',
+    'Sing-Along',
+    'Smooth',
+    'Social Commentary',
+    'Soulful',
+    'Storytelling',
+    'Thriller',
+    'Upbeat',
+    'Uplifting',
+    'Violence',
+    'Yearning'
+  ];
+
+  // Affective Computing
+  Future<void> AffectiveComputing(List<Song> selectedSongs, int playlistID) async {
+    List<int> indexes = List.generate(Tags.length, (index) => 0);
+    List<int> SongScores = List.generate(Song.Songs.length, (index) => 0);
+    for (int i = 0; i < selectedSongs.length - 1; i++) {
+      String? type = selectedSongs[i].type;
+      String? tag2 = selectedSongs[i].tag2;
+      String? tag3 = selectedSongs[i].tag3;
+      int index1 = Tags.indexOf(type!);
+      int index2 = Tags.indexOf(tag2!);
+      int index3 = Tags.indexOf(tag3!);
+      
+      indexes[index1]++;
+      indexes[index2]++;
+      indexes[index3]++;
+    }
+    for (int i = 0; i < Song.Songs.length - 1; i++) {
+      String? type = Song.Songs[i].type;
+      String? tag2 = Song.Songs[i].tag2;
+      String? tag3 = Song.Songs[i].tag3;
+
+      int index1 = Tags.indexOf(type!);
+      int index2 = Tags.indexOf(tag2!);
+      int index3 = Tags.indexOf(tag3!);
+
+      if(index1 != -1 && index2 != -1 && index3 != -1){
+        SongScores[i] += indexes[index1] + indexes[index2] + indexes[index3];
+      } else {
+        print('##############################################\n#########################\n##################');
+      }
+    }
+    List<int> sortedSongScores = List.from(SongScores); // create a copy of the original list
+    sortedSongScores.sort((a, b) => b.compareTo(a)); // sort the copied list in descending order
+    List<int> BestSongScores = sortedSongScores.sublist(0, 5); // get the sublist of the first 5 elements
+    List<int> BestoSongScoresIndexes = BestSongScores.map((number) => SongScores.indexOf(number)).toList(); // map each element to its index in the original list
+    print('BEST SONG SCORES INDEXES');
+    print(BestoSongScoresIndexes); 
+
+    print('BEST SONG SCORES');
+    print(BestSongScores);
+
+    for(int i = 0; i < BestoSongScoresIndexes.length-1; i++) {
+      final db = await initDB();
+      Song.Songs[BestoSongScoresIndexes[i]].playlistID = playlistID;
+    db.insert('songs', Song.Songs[BestoSongScoresIndexes[i]].toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace);
     }
   }
 }

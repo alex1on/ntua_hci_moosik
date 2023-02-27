@@ -36,6 +36,8 @@ class _SetUpPageState extends State<SetUpPage> {
   late int _current_index;
   late List<String> feelings = ['Happy', 'Sad', 'Excited', 'Angry'];
 
+  late List<Song> _selectedSongs = [];
+
   late SQLiteService sqLiteService;
 
   // List of curent user's playlists
@@ -62,6 +64,12 @@ class _SetUpPageState extends State<SetUpPage> {
         angry_songs.shuffle();
       });
     });
+  }
+
+  void SetUpPlaylist (String title) async {
+    int playlistID = await sqLiteService.getPlaylistID(_current_user.id, title);
+    await sqLiteService.AffectiveComputing(_selectedSongs, playlistID);
+    //_selectedSongs.clear();
   }
 
   @override
@@ -103,7 +111,8 @@ class _SetUpPageState extends State<SetUpPage> {
                       song: happy_songs[i],
                       isNotSelected: true,
                       user: _current_user,
-                      category: 'Happy',)
+                      category: 'Happy',
+                      selectedSongs: _selectedSongs,)
                 // _current_index == 1 --> sad
                 else if (_current_index == 1)
                   BuildSongRow(
@@ -111,7 +120,8 @@ class _SetUpPageState extends State<SetUpPage> {
                       song: sad_songs[i],
                       isNotSelected: true,
                       user: _current_user,
-                      category: 'Sad',)
+                      category: 'Sad',
+                      selectedSongs: _selectedSongs,)
                 // _current_index == 2 --> excited
                 else if (_current_index == 2)
                   BuildSongRow(
@@ -119,7 +129,8 @@ class _SetUpPageState extends State<SetUpPage> {
                       song: excited_songs[i],
                       isNotSelected: true,
                       user: _current_user,
-                      category: 'Excited',)
+                      category: 'Excited',
+                      selectedSongs: _selectedSongs,)
                 // _current_index == 3 --> angry
                 else
                   BuildSongRow(
@@ -127,7 +138,8 @@ class _SetUpPageState extends State<SetUpPage> {
                       song: angry_songs[i],
                       isNotSelected: true,
                       user: _current_user, 
-                      category: 'Angry',),
+                      category: 'Angry',
+                      selectedSongs: _selectedSongs,),
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -204,7 +216,8 @@ class _SetUpPageState extends State<SetUpPage> {
                 // Confirm button
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: ()  {
+                    SetUpPlaylist(feelings[_current_index]);
                     if (_current_index >= 3) {
                       Navigator.push(
                         context,
