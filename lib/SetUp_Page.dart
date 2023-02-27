@@ -65,6 +65,7 @@ class _SetUpPageState extends State<SetUpPage> {
       );
     }
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Container(
           color: const Color(0xff000000),
@@ -148,37 +149,6 @@ class _SetUpPageState extends State<SetUpPage> {
                         ),
                         child: Text(
                           'Load More',
-                          style: GoogleFonts.inter(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    'or',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Expanded(
-                    // Search button
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // todo: Search
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xfffb5a00),
-                          shape: const StadiumBorder(),
-                        ),
-                        child: Text(
-                          'Search',
                           style: GoogleFonts.inter(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
