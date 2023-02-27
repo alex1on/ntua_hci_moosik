@@ -30,17 +30,17 @@ class _DefaultPageState extends State<DefaultPage> {
   List<List<Song>> _playlistSongs = List.generate(4, (_) => []);
 
   // Every available song for each category
-  List<Song> happy_songs = Song.Happy_songs;
-  List<Song> sad_songs = Song.Sad_songs;
-  List<Song> excited_songs = Song.Excited_songs;
-  List<Song> angry_songs = Song.Angry_songs;
+  List<Song> happy_songs = Song.Songs;
+  List<Song> sad_songs = Song.Songs;
+  List<Song> excited_songs = Song.Songs;
+  List<Song> angry_songs = Song.Songs;
 
   final feelings = ['Happy', 'Sad', 'Excited', 'Angry'];
 
   // Audio player
   AudioPlayer _player = AudioPlayer();
   late Song _currently_playing =
-      Song(title: '', artist: '', url: '', category: '');
+      Song(title: '', artist: '', url: '');
 
   @override
   void initState() {
@@ -854,45 +854,24 @@ class _DefaultPageState extends State<DefaultPage> {
                                   ),
                             onPressed: _press,
                           ),
-                          // IconButton(
-                          //   icon: const Icon(
-                          //     Icons.skip_previous,
-                          //     color: Color(0xfffb5a00),
-                          //     size: 36,
-                          //   ),
-                          //   onPressed: () {
-                          //     _player.stop();
-                          //     setState(() {});
-                          //     Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //           builder: (context) => PlaylistPage(
-                          //             user: _current_user,
-                          //             playlist: _usersPlaylists[0],
-                          //             player: _player,
-                          //             playlistSongs: happy_songs,
-                          //           ),
-                          //         ));
-                          //     // todo: Play song
-                          //   },
-                          // ),
                           IconButton(
                             icon: const Icon(
                               Icons.skip_next,
                               color: Color(0xfffb5a00),
                               size: 36,
                             ),
+                            // I need to find in which playlist the song exists
                             onPressed: () {
-                              if (_currently_playing.category == 'Happy') {
-                                feelingButton(happy_songs);
-                              } else if (_currently_playing.category == 'Sad') {
-                                feelingButton(sad_songs);
-                              } else if (_currently_playing.category ==
-                                  'Excited') {
-                                feelingButton(excited_songs);
-                              } else {
-                                feelingButton(angry_songs);
-                              }
+                              // if (_currently_playing.category == 'Happy') {
+                              //   feelingButton(happy_songs);
+                              // } else if (_currently_playing.category == 'Sad') {
+                              //   feelingButton(sad_songs);
+                              // } else if (_currently_playing.category ==
+                              //     'Excited') {
+                              //   feelingButton(excited_songs);
+                              // } else {
+                              //   feelingButton(angry_songs);
+                              // }
                             },
                           ),
                           IconButton(

@@ -87,7 +87,6 @@ class BuildSongRowState extends State<BuildSongRow> {
         title: _song.title,
         artist: _song.artist,
         url: _song.url,
-        category: widget.category,
         type: _song.type,
         tag2: _song.tag2,
         tag3: _song.tag3,

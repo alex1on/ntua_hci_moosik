@@ -23,13 +23,13 @@ class SetUpPage extends StatefulWidget {
 class _SetUpPageState extends State<SetUpPage> {
   int _numSongs = 3;
 
-  List<Song> All_songs = Song.Happy_songs;
+  List<Song> All_songs = Song.Songs;
 
   // these will be equal to All_songs
-  List<Song> happy_songs = Song.Happy_songs;
-  List<Song> sad_songs = Song.Sad_songs;
-  List<Song> excited_songs = Song.Excited_songs;
-  List<Song> angry_songs = Song.Angry_songs;
+  List<Song> happy_songs = Song.Songs;
+  List<Song> sad_songs = Song.Songs;
+  List<Song> excited_songs = Song.Songs;
+  List<Song> angry_songs = Song.Songs;
 
   late User _current_user;
   late List<Playlist> _defaultPlaylists;

@@ -130,7 +130,7 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                   BuildSongRow(
                     color: Colors.grey[800],
-                    song: Song.Happy_songs[0],
+                    song: Song.Songs[0],
                     isNotSelected: true,
                     user: _current_user,
                     category: 'Happy',
@@ -154,21 +154,21 @@ class _SearchPageState extends State<SearchPage> {
                       children: [
                         BuildSongRow(
                           color: Colors.grey[800],
-                          song: Song.Happy_songs[0],
+                          song: Song.Songs[0],
                           isNotSelected: true,
                           user: _current_user,
                           category: 'Happy',
                         ),
                         BuildSongRow(
                           color: Colors.grey[800],
-                          song: Song.Happy_songs[0],
+                          song: Song.Songs[0],
                           isNotSelected: true,
                           user: _current_user,
                           category: 'Happy',
                         ),
                         BuildSongRow(
                           color: Colors.grey[800],
-                          song: Song.Happy_songs[0],
+                          song: Song.Songs[0],
                           isNotSelected: true,
                           user: _current_user,
                           category: 'Happy',
@@ -195,21 +195,21 @@ class _SearchPageState extends State<SearchPage> {
                     children: [
                       BuildSongRow(
                         color: Colors.grey[800],
-                        song: Song.Happy_songs[0],
+                        song: Song.Songs[0],
                         isNotSelected: true,
                         user: _current_user,
                         category: 'Happy',
                       ),
                       BuildSongRow(
                         color: Colors.grey[800],
-                        song: Song.Happy_songs[0],
+                        song: Song.Songs[0],
                         isNotSelected: true,
                         user: _current_user,
                         category: 'Happy',
                       ),
                       BuildSongRow(
                         color: Colors.grey[800],
-                        song: Song.Happy_songs[0],
+                        song: Song.Songs[0],
                         isNotSelected: true,
                         user: _current_user,
                         category: 'Happy',
@@ -240,7 +240,7 @@ class _SearchPageState extends State<SearchPage> {
                 itemBuilder: (context, index) {
                   return BuildSongRow(
                     color: Colors.grey[800],
-                    song: Song.Happy_songs[0],
+                    song: Song.Songs[0],
                     // songname: _recentSongs[index],
                     // artist: 'Artist',
                     isNotSelected: true,
