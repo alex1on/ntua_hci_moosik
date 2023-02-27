@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:ntua_hci_moosik/Playlist_Page.dart';
 import 'Settings_Page.dart';
 import 'main.dart';
 
@@ -49,7 +50,7 @@ class _DefaultPageState extends State<DefaultPage> {
   }
 
   // If you press a #feeling button, a random song of this category will start playing
-  void feelingButton(List<Song> feelingList) async {
+  void feelingButton(List<Song> feelingList) {
     final random = Random();
     // pick a random song from the song list
     final randomSong = feelingList[random.nextInt(feelingList.length)];
@@ -59,9 +60,10 @@ class _DefaultPageState extends State<DefaultPage> {
         Uri.parse('asset:///${randomSong.url}'),
       ),
     );
-    await _player.play();
+
+    _player.play();
     // Listen to the player state stream
-    _player.playerStateStream.listen((playerState) async {
+    _player.playerStateStream.listen((playerState) {
       if (playerState.processingState == ProcessingState.completed) {
         // Replay another random song from the list
         final newRandomSong = feelingList[random.nextInt(feelingList.length)];
@@ -71,15 +73,17 @@ class _DefaultPageState extends State<DefaultPage> {
             Uri.parse('asset:///${newRandomSong.url}'),
           ),
         );
-        await _player.play();
+        _player.play();
       }
     });
+    setState(() {});
   }
 
   void Replay() async {
     await _player.stop();
     await _player.seek(Duration.zero);
     await _player.play();
+    setState(() {});
   }
 
   @override
@@ -99,8 +103,8 @@ class _DefaultPageState extends State<DefaultPage> {
     setState(() {});
   }
 
-  // update _current_user when you come back from a page that changed user
-  void _navigateToPage() async {
+  // update _current_user when you come back from settings page
+  void _navigateToSettingsPage() async {
     final updatedUser = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SettingsPage(user: widget.user)),
@@ -111,6 +115,14 @@ class _DefaultPageState extends State<DefaultPage> {
         _current_user = widget.user;
       });
     }
+  }
+
+  // Returns the playlist selected by the user
+  Playlist SelectedPlaylist(String title) {
+    final selected_playlist = _usersPlaylists.firstWhere(
+      (playlist) => playlist.title == title,
+    );
+    return selected_playlist;
   }
 
   List<Widget> _buildWidgets(int count) {
@@ -186,7 +198,7 @@ class _DefaultPageState extends State<DefaultPage> {
                               ClipOval(
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    _navigateToPage();
+                                    _navigateToSettingsPage();
                                   },
                                   style: ElevatedButton.styleFrom(
                                     padding: const EdgeInsets.all(15),
@@ -771,66 +783,78 @@ class _DefaultPageState extends State<DefaultPage> {
                     ),
                   ),
                   const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 5),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: _player.playing
-                              ? const Icon(
-                                  Icons.pause,
-                                  color: Color(0xfffb5a00),
-                                  size: 36,
-                                )
-                              : const Icon(
-                                  Icons.play_arrow,
-                                  color: Color(0xfffb5a00),
-                                  size: 36,
-                                ),
-                          onPressed: _press,
-                        ),
-                        // IconButton(
-                        //   icon: const Icon(
-                        //     Icons.skip_previous,
-                        //     color: Color(0xfffb5a00),
-                        //     size: 36,
-                        //   ),
-                        //   onPressed: () {
-                        //     // todo: Play song
-                        //   },
-                        // ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.skip_next,
-                            color: Color(0xfffb5a00),
-                            size: 36,
+                  if (_currently_playing.title != '')
+                    Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            icon: _player.playing
+                                ? const Icon(
+                                    Icons.pause,
+                                    color: Color(0xfffb5a00),
+                                    size: 36,
+                                  )
+                                : const Icon(
+                                    Icons.play_arrow,
+                                    color: Color(0xfffb5a00),
+                                    size: 36,
+                                  ),
+                            onPressed: _press,
                           ),
-                          onPressed: () {
-                            if (_currently_playing.category == 'Happy') {
-                              feelingButton(happy_songs);
-                            } else if (_currently_playing.category == 'Sad') {
-                              feelingButton(sad_songs);
-                            } else if (_currently_playing.category ==
-                                'Excited') {
-                              feelingButton(excited_songs);
-                            } else {
-                              feelingButton(angry_songs);
-                            }
-                          },
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.replay,
-                            color: Color(0xfffb5a00),
-                            size: 36,
+                          IconButton(
+                            icon: const Icon(
+                              Icons.skip_previous,
+                              color: Color(0xfffb5a00),
+                              size: 36,
+                            ),
+                            onPressed: () {
+                              _player.stop();
+                              setState(() {});
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PlaylistPage(
+                                      user: _current_user,
+                                      playlist: _usersPlaylists[0],
+                                      player: _player,
+                                      playlistSongs: happy_songs,
+                                    ),
+                                  ));
+                              // todo: Play song
+                            },
                           ),
-                          onPressed: () {
-                            Replay();
-                          },
-                        ),
-                      ],
+                          IconButton(
+                            icon: const Icon(
+                              Icons.skip_next,
+                              color: Color(0xfffb5a00),
+                              size: 36,
+                            ),
+                            onPressed: () {
+                              if (_currently_playing.category == 'Happy') {
+                                feelingButton(happy_songs);
+                              } else if (_currently_playing.category == 'Sad') {
+                                feelingButton(sad_songs);
+                              } else if (_currently_playing.category == 'Excited') {
+                                feelingButton(excited_songs);
+                              } else {
+                                feelingButton(angry_songs);
+                              }
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.replay,
+                              color: Color(0xfffb5a00),
+                              size: 36,
+                            ),
+                            onPressed: () {
+                              Replay();
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),

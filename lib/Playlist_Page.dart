@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:just_audio/just_audio.dart';
 import 'dart:ui';
 
+import 'package:ntua_hci_moosik/main.dart';
+
+import 'Default_Page.dart';
+
 class PlaylistPage extends StatefulWidget {
-  const PlaylistPage({Key? key}) : super(key: key);
+  late User user;
+  late Playlist playlist;
+  late List<Song> playlistSongs;
+  late AudioPlayer player;
+
+  PlaylistPage(
+      {Key? key,
+      required this.user,
+      required this.playlist,
+      required this.player,
+      required this.playlistSongs})
+      : super(key: key);
 
   @override
   State<PlaylistPage> createState() => _PlaylistPageState();
@@ -11,11 +27,41 @@ class PlaylistPage extends StatefulWidget {
 
 class _PlaylistPageState extends State<PlaylistPage> {
   List<Widget> _myWidgets = [];
+  late User _current_user;
+  late Playlist _current_playlist;
+  late AudioPlayer _player;
+
+  late SQLiteService sqLiteService;
+  late List<Song> _playlistSongs;
 
   @override
   void initState() {
     super.initState();
-    _myWidgets = _buildWidgets(50);
+    _current_user = widget.user;
+    _current_playlist = widget.playlist;
+    _player = widget.player;
+    _myWidgets = _buildWidgets(widget.playlistSongs.length);
+    setState(() {
+      _playlistSongs = widget.playlistSongs;
+    });
+    // sqLiteService = SQLiteService();
+    // sqLiteService.initDB().whenComplete(() async {
+    //   final playlistSongs = await sqLiteService.getPlaylistSongs(widget.playlist);
+    //   setState(() {
+    //     _playlistSongs = playlistSongs;
+    //     _myWidgets = _buildWidgets(_playlistSongs.length);
+    //   });
+    // });
+  }
+
+  // play/pause button
+  void _press() {
+    if (_player.playing) {
+      _player.pause();
+    } else {
+      _player.play();
+    }
+    setState(() {});
   }
 
   List<Widget> _buildWidgets(int count) {
@@ -46,18 +92,18 @@ class _PlaylistPageState extends State<PlaylistPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text(
-                      'Song Name',
-                      style: TextStyle(
+                      widget.playlistSongs[i].title,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
                     Text(
-                      'Artist',
-                      style: TextStyle(
+                      widget.playlistSongs[i].artist,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
@@ -68,14 +114,18 @@ class _PlaylistPageState extends State<PlaylistPage> {
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: IconButton(
-                    icon: const Icon(
-                      Icons.play_arrow,
-                      color: Color(0xfffb5a00),
-                      size: 36,
-                    ),
-                    onPressed: () {
-                      // todo: Play song
-                    },
+                    icon: _player.playing
+                        ? const Icon(
+                            Icons.pause,
+                            color: Color(0xfffb5a00),
+                            size: 36,
+                          )
+                        : const Icon(
+                            Icons.play_arrow,
+                            color: Color(0xfffb5a00),
+                            size: 36,
+                          ),
+                    onPressed: _press,
                   ),
                 ),
               ],
@@ -108,10 +158,13 @@ class _PlaylistPageState extends State<PlaylistPage> {
                       ClipOval(
                         child: ElevatedButton(
                           onPressed: () {
-                            // Navigator.pop(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => DefaultPage()),
-                            // );
+                            Navigator.pop(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DefaultPage(
+                                        user: _current_user,
+                                      )),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.all(15),
@@ -173,7 +226,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        text: 'Playlist Name',
+                        text: widget.playlist.title,
                         style: GoogleFonts.roboto(
                           fontSize: 32,
                           fontWeight: FontWeight.w900,

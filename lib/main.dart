@@ -441,6 +441,19 @@ class SQLiteService {
     return queryResult.map((e) => Playlist.fromMap(e)).toList();
   }
 
+  // returns a list of playlist's songs
+  Future<List<Song>> getPlaylistSongs (Playlist playlist) async {
+    final db = await initDB();
+
+    final List<Map<String, Object?>> queryResult = await db.query(
+      'songs',
+      where: 'playlistID = ?',
+      whereArgs: [playlist.id],
+    );
+
+    return queryResult.map((e) => Song.fromMap(e)).toList();
+  }
+
   /// searchs for playlist with userID = [userID] and title = [title] 
   /// if such a playlist exists, then it returns its id. Otherwise, -1 is returned
   Future<int> getPlaylistID(int ?userID, String title) async {
