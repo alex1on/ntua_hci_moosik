@@ -51,7 +51,8 @@ class _DefaultPageState extends State<DefaultPage> {
       final playlists = await sqLiteService.getUserPlaylists(_current_user);
       final HappyListSongs = await sqLiteService.getPlaylistSongs(playlists[0]);
       final SadListSongs = await sqLiteService.getPlaylistSongs(playlists[1]);
-      final ExcitedListSongs = await sqLiteService.getPlaylistSongs(playlists[2]);
+      final ExcitedListSongs =
+          await sqLiteService.getPlaylistSongs(playlists[2]);
       final AngryListSongs = await sqLiteService.getPlaylistSongs(playlists[3]);
       setState(() {
         _usersPlaylists = playlists;
@@ -815,20 +816,29 @@ class _DefaultPageState extends State<DefaultPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          _currently_playing.title,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Text(
-                          _currently_playing.artist,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
+                        SizedBox(
+                          width: 153,
+                          child: Column(
+                            children: [
+                              Text(
+                                _currently_playing.title,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                _currently_playing.artist,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -863,7 +873,7 @@ class _DefaultPageState extends State<DefaultPage> {
                             // I need to find in which playlist the song exists
                             onPressed: () {
                               // if (_currently_playing.category == 'Happy') {
-                              //   feelingButton(happy_songs);
+                              feelingButton(happy_songs);
                               // } else if (_currently_playing.category == 'Sad') {
                               //   feelingButton(sad_songs);
                               // } else if (_currently_playing.category ==
@@ -873,7 +883,7 @@ class _DefaultPageState extends State<DefaultPage> {
                               //   feelingButton(angry_songs);
                               // }
                             },
-                          ),
+                          ), 
                           IconButton(
                             icon: const Icon(
                               Icons.replay,

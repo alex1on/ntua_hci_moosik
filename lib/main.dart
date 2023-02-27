@@ -760,7 +760,6 @@ class SQLiteService {
             title TEXT,
             artist TEXT,
             url TEXT,
-            category TEXT,
             playlistID INTEGER,
             type TEXT,
             tag2 TEXT,
