@@ -69,7 +69,7 @@ class _SetUpPageState extends State<SetUpPage> {
   void SetUpPlaylist (String title) async {
     int playlistID = await sqLiteService.getPlaylistID(_current_user.id, title);
     await sqLiteService.AffectiveComputing(_selectedSongs, playlistID);
-    //_selectedSongs.clear();
+    _selectedSongs.clear();
   }
 
   @override

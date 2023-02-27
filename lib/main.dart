@@ -683,14 +683,6 @@ class Song {
       tag3: 'Classic',
     ),
     Song(
-      title: 'Hypnotize',
-      artist: 'The Notorious B.I.G.',
-      url: '../assets/music/The Notorious B.I.G. - Hypnotize.mp3',
-      type: 'Hip-Hop',
-      tag2: 'Smooth',
-      tag3: 'Classic',
-    ),
-    Song(
       title: 'Save Your Tears',
       artist: 'The Weeknd',
       url: '../assets/music/The Weeknd - Save Your Tears.mp3',
@@ -1013,7 +1005,6 @@ class SQLiteService {
     'Hip-Hop',
     'Nu metal',
     'Electronic',
-    'Ambient',
     'Indie Pop',
     'Neo Soul',
     'Pop',
@@ -1069,7 +1060,6 @@ class SQLiteService {
     'Motivational',
     'Melancholy',
     'Power Ballad',
-    'Melodramatic',
     'Powerful',
     'Nostalgia',
     'Quirky',
@@ -1092,9 +1082,7 @@ class SQLiteService {
     'Storytelling',
     'Thriller',
     'Upbeat',
-    'Uplifting',
-    'Violence',
-    'Yearning'
+    'Uplifting'
   ];
 
   // Affective Computing
@@ -1108,7 +1096,7 @@ class SQLiteService {
       int index1 = Tags.indexOf(type!);
       int index2 = Tags.indexOf(tag2!);
       int index3 = Tags.indexOf(tag3!);
-      
+
       indexes[index1]++;
       indexes[index2]++;
       indexes[index3]++;
@@ -1124,19 +1112,24 @@ class SQLiteService {
 
       if(index1 != -1 && index2 != -1 && index3 != -1){
         SongScores[i] += indexes[index1] + indexes[index2] + indexes[index3];
-      } else {
-        print('##############################################\n#########################\n##################');
       }
     }
-    List<int> sortedSongScores = List.from(SongScores); // create a copy of the original list
-    sortedSongScores.sort((a, b) => b.compareTo(a)); // sort the copied list in descending order
-    List<int> BestSongScores = sortedSongScores.sublist(0, 5); // get the sublist of the first 5 elements
-    List<int> BestoSongScoresIndexes = BestSongScores.map((number) => SongScores.indexOf(number)).toList(); // map each element to its index in the original list
-    print('BEST SONG SCORES INDEXES');
-    print(BestoSongScoresIndexes); 
 
-    print('BEST SONG SCORES');
-    print(BestSongScores);
+    List<int> BestoSongScoresIndexes = List.generate(10, (index) => 0);
+
+    for(int i = 0; i < 10; i++) {
+      int maxIndex = SongScores.indexOf(SongScores.reduce((a, b) => a > b ? a : b));
+      SongScores[maxIndex] = 0;
+      BestoSongScoresIndexes.add(maxIndex);
+    }
+
+    // List<int> sortedSongScores = List.from(SongScores); // create a copy of the original list
+    // sortedSongScores.sort((a, b) => b.compareTo(a)); // sort the copied list in descending order
+    // List<int> BestSongScores = sortedSongScores.sublist(0, 5); // get the sublist of the first 5 elements
+    // List<int> BestoSongScoresIndexes = BestSongScores.map((number) => SongScores.indexOf(number)).toList(); // map each element to its index in the original list
+    // print(indexes);
+    // print(SongScores);
+
 
     for(int i = 0; i < BestoSongScoresIndexes.length-1; i++) {
       final db = await initDB();
