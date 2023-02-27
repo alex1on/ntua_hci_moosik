@@ -7,6 +7,7 @@ class BuildSongRow extends StatefulWidget {
   late Song song;
   late bool isNotSelected;
   late User user;
+  late String category;
 
   BuildSongRow({
     Key? key,
@@ -14,6 +15,7 @@ class BuildSongRow extends StatefulWidget {
     required this.song,
     required this.isNotSelected,
     required this.user,
+    required this.category,
   }) : super(key: key);
 
   @override
@@ -34,18 +36,18 @@ class BuildSongRowState extends State<BuildSongRow> {
   @override
   void initState() {
     super.initState();
-    _song = widget.song;
-    _user = widget.user;
-    _category = widget.song.category;
-    _player.setAudioSource(
-      AudioSource.uri(
-        Uri.parse('asset:///${_song.url}'),
-      ),
-    );
     sqLiteService = SQLiteService();
     sqLiteService.initDB().whenComplete(() async {
-      final playlistID = await sqLiteService.getPlaylistID(_user.id, _category);
+      final playlistID = await sqLiteService.getPlaylistID(widget.user.id, widget.category);
       setState(() {
+        _song = widget.song;
+        _user = widget.user;
+        _category = widget.category;
+        _player.setAudioSource(
+          AudioSource.uri(
+            Uri.parse('asset:///${_song.url}'),
+          ),
+        );
         _playlistID = playlistID;
       });
     });
@@ -60,7 +62,7 @@ class BuildSongRowState extends State<BuildSongRow> {
 
   void _press() {
     if (_player.playing) {
-       _player.pause();
+      _player.pause();
     } else {
       _player.play();
     }
@@ -85,13 +87,16 @@ class BuildSongRowState extends State<BuildSongRow> {
         title: _song.title,
         artist: _song.artist,
         url: _song.url,
-        category: _song.category,
+        category: widget.category,
+        type: _song.type,
+        tag2: _song.tag2,
+        tag3: _song.tag3,
         playlistID: _playlistID));
   }
 
   void RemoveSong() async {
     int SongID = await sqLiteService.getSongID(
-        _song.title, _song.artist, _song.url, _song.category, _playlistID);
+        _song.title, _song.artist, _song.url, widget.category, _playlistID);
     await sqLiteService.deleteSong(SongID);
   }
 
@@ -110,6 +115,8 @@ class BuildSongRowState extends State<BuildSongRow> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+    });
     return Column(
       children: [
         const SizedBox(height: 15),

@@ -272,9 +272,9 @@ class SQLiteService {
             url TEXT,
             category TEXT,
             playlistID INTEGER,
-            type, TEXT,
-            tag2, TEXT,
-            tag3, TEXT,
+            type TEXT,
+            tag2 TEXT,
+            tag3 TEXT,
             FOREIGN KEY (playlistID) REFERENCES playlists(id)
           )
           ''');

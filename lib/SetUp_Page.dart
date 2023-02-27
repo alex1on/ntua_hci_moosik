@@ -22,6 +22,10 @@ class SetUpPage extends StatefulWidget {
 
 class _SetUpPageState extends State<SetUpPage> {
   int _numSongs = 3;
+
+  List<Song> All_songs = Song.Happy_songs;
+
+  // these will be equal to All_songs
   List<Song> happy_songs = Song.Happy_songs;
   List<Song> sad_songs = Song.Sad_songs;
   List<Song> excited_songs = Song.Excited_songs;
@@ -33,8 +37,7 @@ class _SetUpPageState extends State<SetUpPage> {
   late List<String> feelings = ['Happy', 'Sad', 'Excited', 'Angry'];
 
   late SQLiteService sqLiteService;
-  // List of users in db
-  List<User> _users = <User>[];
+
   // List of curent user's playlists
   List<Playlist> _usersPlaylists = <Playlist>[];
 
@@ -46,27 +49,23 @@ class _SetUpPageState extends State<SetUpPage> {
     _current_index = widget.index;
     sqLiteService = SQLiteService();
     sqLiteService.initDB().whenComplete(() async {
-      final users = await sqLiteService.getUsers();
       final playlists = await sqLiteService.getUserPlaylists(_current_user);
       setState(() {
-        _users = users;
         _usersPlaylists = playlists;
         _defaultPlaylists = widget.defaultPlaylists;
         _current_index = widget.index;
+
+        // shuffle the lists
+        happy_songs.shuffle();
+        sad_songs.shuffle();
+        excited_songs.shuffle();
+        angry_songs.shuffle();
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // // if index > 3, then you are done with set up --> go to default page.
-    // if (widget.index > 3) {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => DefaultPage(user: _current_user)),
-    //   );
-    // }
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
@@ -96,39 +95,39 @@ class _SetUpPageState extends State<SetUpPage> {
                 ),
               ),
               const SizedBox(height: 15),
-              for (int i = 0; i < _numSongs; i++) 
+              for (int i = 0; i < _numSongs; i++)
                 // _current_index == 0 --> happy
-                if(_current_index == 0) 
+                if (_current_index == 0)
                   BuildSongRow(
                       color: Colors.grey[800],
                       song: happy_songs[i],
                       isNotSelected: true,
-                      user: _current_user
-                  )
+                      user: _current_user,
+                      category: 'Happy',)
                 // _current_index == 1 --> sad
-                else if (_current_index == 1) 
+                else if (_current_index == 1)
                   BuildSongRow(
                       color: Colors.grey[800],
                       song: sad_songs[i],
                       isNotSelected: true,
-                      user: _current_user
-                  )
+                      user: _current_user,
+                      category: 'Sad',)
                 // _current_index == 2 --> excited
-                else if (_current_index == 2) 
+                else if (_current_index == 2)
                   BuildSongRow(
                       color: Colors.grey[800],
                       song: excited_songs[i],
                       isNotSelected: true,
-                      user: _current_user
-                  )
-                // _current_index == 3 --> angry  
-                else 
+                      user: _current_user,
+                      category: 'Excited',)
+                // _current_index == 3 --> angry
+                else
                   BuildSongRow(
                       color: Colors.grey[800],
                       song: angry_songs[i],
                       isNotSelected: true,
-                      user: _current_user
-                  ),
+                      user: _current_user, 
+                      category: 'Angry',),
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

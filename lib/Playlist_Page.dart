@@ -29,20 +29,21 @@ class _PlaylistPageState extends State<PlaylistPage> {
   List<Widget> _myWidgets = [];
   late User _current_user;
   late Playlist _current_playlist;
+  late List<Song> _playlistSongs;
   late AudioPlayer _player;
 
   late SQLiteService sqLiteService;
-  late List<Song> _playlistSongs;
 
   @override
   void initState() {
     super.initState();
     _current_user = widget.user;
-    _current_playlist = widget.playlist;
-    _player = widget.player;
-    _myWidgets = _buildWidgets(widget.playlistSongs.length);
+    sqLiteService = SQLiteService();
     setState(() {
       _playlistSongs = widget.playlistSongs;
+       _current_playlist = widget.playlist;
+      _player = widget.player;
+    _myWidgets = _buildWidgets(widget.playlistSongs.length);
     });
     // sqLiteService = SQLiteService();
     // sqLiteService.initDB().whenComplete(() async {
@@ -55,11 +56,21 @@ class _PlaylistPageState extends State<PlaylistPage> {
   }
 
   // play/pause button
-  void _press() {
+  void _press(int index) {
     if (_player.playing) {
-      _player.pause();
+       _player.pause();
+       _player.setAudioSource(
+      AudioSource.uri(
+        Uri.parse('asset:///${widget.playlistSongs[index].url}'),
+      ),
+    );
     } else {
-      _player.play();
+      _player.setAudioSource(
+      AudioSource.uri(
+        Uri.parse('asset:///${widget.playlistSongs[index].url}'),
+      ),
+    );
+       _player.play();
     }
     setState(() {});
   }
@@ -125,7 +136,9 @@ class _PlaylistPageState extends State<PlaylistPage> {
                             color: Color(0xfffb5a00),
                             size: 36,
                           ),
-                    onPressed: _press,
+                    onPressed: () {
+                      _press(i);
+                    },
                   ),
                 ),
               ],

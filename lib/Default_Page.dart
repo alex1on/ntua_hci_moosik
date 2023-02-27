@@ -22,8 +22,10 @@ class _DefaultPageState extends State<DefaultPage> {
 
   late User _current_user;
   late SQLiteService sqLiteService;
+  
   // List of current user's playlists
   List<Playlist> _usersPlaylists = <Playlist>[];
+
   // List of of lists of songs for user's playlists
   List<List<Song>> _playlistSongs = List.generate(4, (_) => []);
 
@@ -130,6 +132,15 @@ class _DefaultPageState extends State<DefaultPage> {
     }
   }
 
+  void _navigateToPlaylistPage(int index) async {
+    final updatedUser = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PlaylistPage(user: widget.user, playlist: _usersPlaylists[index], player: _player, playlistSongs: _playlistSongs[index],)),
+    );
+    setState(() {
+    });
+  }
+
   // Returns the playlist selected by the user
   Playlist SelectedPlaylist(String title) {
     final selected_playlist = _usersPlaylists.firstWhere(
@@ -138,22 +149,14 @@ class _DefaultPageState extends State<DefaultPage> {
     return selected_playlist;
   }
 
+
   List<Widget> _buildWidgets(int count) {
     List<Widget> widgets = [];
     for (int i = 0; i < count; i++) {
       widgets.add(
         GestureDetector(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PlaylistPage(
-                    user: _current_user,
-                    playlist: _usersPlaylists[i],
-                    player: _player,
-                    playlistSongs: _playlistSongs[i],
-                  ),
-                ));
+            _navigateToPlaylistPage(i);
           },
           child: Container(
             height: 200,
@@ -851,28 +854,28 @@ class _DefaultPageState extends State<DefaultPage> {
                                   ),
                             onPressed: _press,
                           ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.skip_previous,
-                              color: Color(0xfffb5a00),
-                              size: 36,
-                            ),
-                            onPressed: () {
-                              _player.stop();
-                              setState(() {});
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PlaylistPage(
-                                      user: _current_user,
-                                      playlist: _usersPlaylists[0],
-                                      player: _player,
-                                      playlistSongs: happy_songs,
-                                    ),
-                                  ));
-                              // todo: Play song
-                            },
-                          ),
+                          // IconButton(
+                          //   icon: const Icon(
+                          //     Icons.skip_previous,
+                          //     color: Color(0xfffb5a00),
+                          //     size: 36,
+                          //   ),
+                          //   onPressed: () {
+                          //     _player.stop();
+                          //     setState(() {});
+                          //     Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //           builder: (context) => PlaylistPage(
+                          //             user: _current_user,
+                          //             playlist: _usersPlaylists[0],
+                          //             player: _player,
+                          //             playlistSongs: happy_songs,
+                          //           ),
+                          //         ));
+                          //     // todo: Play song
+                          //   },
+                          // ),
                           IconButton(
                             icon: const Icon(
                               Icons.skip_next,
