@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ntua_hci_moosik/Build_Song_Row.dart';
 
 import 'main.dart';
 
 class SearchPage extends StatefulWidget {
-
+  late String? searchsong;
   late User user;
 
-  SearchPage({Key? key, required this.user}) : super(key: key);
+  SearchPage({Key? key, required this.user, this.searchsong}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-
   final List<String> _recentSongs = ['Song 1', 'Song 2', 'Song 3', 'Song 4'];
   final TextEditingController _searchController = TextEditingController();
   bool _showRelatedSongs = false;
@@ -33,6 +33,9 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     _current_user = widget.user;
+    if (widget.searchsong != null) {
+      _searchController.text = widget.searchsong!;
+    }
   }
 
   @override
@@ -60,6 +63,9 @@ class _SearchPageState extends State<SearchPage> {
               children: [
                 Expanded(
                   child: TextField(
+                    onChanged: (String text) {
+                      widget.searchsong = text;
+                    },
                     controller: _searchController,
                     style: const TextStyle(
                       color: Colors.white,
@@ -78,6 +84,8 @@ class _SearchPageState extends State<SearchPage> {
                         ),
                         onPressed: () {
                           setState(() {
+                            widget.searchsong = widget.searchsong;
+                            // searchsong can be used to.. search for the song
                             _showRelatedSongs = true;
                             _showResultSong = true;
                           });
@@ -121,10 +129,11 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ),
                   BuildSongRow(
-                      color: Colors.grey[800],
-                      song: Song.Happy_songs[0],
-                      isNotSelected: true,
-                      user: _current_user,),
+                    color: Colors.grey[800],
+                    song: Song.Happy_songs[0],
+                    isNotSelected: true,
+                    user: _current_user,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(
                         left: 8.0, top: 16.0, bottom: 8.0),
@@ -143,20 +152,23 @@ class _SearchPageState extends State<SearchPage> {
                     child: Column(
                       children: [
                         BuildSongRow(
-                            color: Colors.grey[800],
-                            song: Song.Happy_songs[0],
-                            isNotSelected: true,
-                            user: _current_user,),
+                          color: Colors.grey[800],
+                          song: Song.Happy_songs[0],
+                          isNotSelected: true,
+                          user: _current_user,
+                        ),
                         BuildSongRow(
-                            color: Colors.grey[800],
-                            song: Song.Happy_songs[0],
-                            isNotSelected: true,
-                            user: _current_user,),
+                          color: Colors.grey[800],
+                          song: Song.Happy_songs[0],
+                          isNotSelected: true,
+                          user: _current_user,
+                        ),
                         BuildSongRow(
-                            color: Colors.grey[800],
-                            song: Song.Happy_songs[0],
-                            isNotSelected: true,
-                            user: _current_user,),
+                          color: Colors.grey[800],
+                          song: Song.Happy_songs[0],
+                          isNotSelected: true,
+                          user: _current_user,
+                        ),
                       ],
                     ),
                   ),
@@ -178,20 +190,23 @@ class _SearchPageState extends State<SearchPage> {
                       child: Column(
                     children: [
                       BuildSongRow(
-                          color: Colors.grey[800],
-                          song: Song.Happy_songs[0],
-                          isNotSelected: true, 
-                          user: _current_user,),
+                        color: Colors.grey[800],
+                        song: Song.Happy_songs[0],
+                        isNotSelected: true,
+                        user: _current_user,
+                      ),
                       BuildSongRow(
-                          color: Colors.grey[800],
-                          song: Song.Happy_songs[0],
-                          isNotSelected: true, 
-                          user: _current_user,),
+                        color: Colors.grey[800],
+                        song: Song.Happy_songs[0],
+                        isNotSelected: true,
+                        user: _current_user,
+                      ),
                       BuildSongRow(
-                          color: Colors.grey[800],
-                          song: Song.Happy_songs[0],
-                          isNotSelected: true, 
-                          user: _current_user,),
+                        color: Colors.grey[800],
+                        song: Song.Happy_songs[0],
+                        isNotSelected: true,
+                        user: _current_user,
+                      ),
                     ],
                   )),
                 ],
@@ -217,12 +232,13 @@ class _SearchPageState extends State<SearchPage> {
                 itemCount: _recentSongs.length,
                 itemBuilder: (context, index) {
                   return BuildSongRow(
-                      color: Colors.grey[800],
-                      song: Song.Happy_songs[0],
-                      // songname: _recentSongs[index],
-                      // artist: 'Artist',
-                      isNotSelected: true,
-                      user: _current_user,);
+                    color: Colors.grey[800],
+                    song: Song.Happy_songs[0],
+                    // songname: _recentSongs[index],
+                    // artist: 'Artist',
+                    isNotSelected: true,
+                    user: _current_user,
+                  );
                 },
               ),
             ),
