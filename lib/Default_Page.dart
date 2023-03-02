@@ -22,7 +22,7 @@ class _DefaultPageState extends State<DefaultPage> {
 
   late User _current_user;
   late SQLiteService sqLiteService;
-  
+
   // List of current user's playlists
   List<Playlist> _usersPlaylists = <Playlist>[];
 
@@ -39,8 +39,7 @@ class _DefaultPageState extends State<DefaultPage> {
 
   // Audio player
   AudioPlayer _player = AudioPlayer();
-  late Song _currently_playing =
-      Song(title: '', artist: '', url: '');
+  late Song _currently_playing = Song(title: '', artist: '', url: '');
 
   @override
   void initState() {
@@ -136,10 +135,15 @@ class _DefaultPageState extends State<DefaultPage> {
   void _navigateToPlaylistPage(int index) async {
     final updatedUser = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PlaylistPage(user: widget.user, playlist: _usersPlaylists[index], player: _player, playlistSongs: _playlistSongs[index],)),
+      MaterialPageRoute(
+          builder: (context) => PlaylistPage(
+                user: widget.user,
+                playlist: _usersPlaylists[index],
+                player: _player,
+                playlistSongs: _playlistSongs[index],
+              )),
     );
-    setState(() {
-    });
+    setState(() {});
   }
 
   // Returns the playlist selected by the user
@@ -149,7 +153,6 @@ class _DefaultPageState extends State<DefaultPage> {
     );
     return selected_playlist;
   }
-
 
   List<Widget> _buildWidgets(int count) {
     List<Widget> widgets = [];
@@ -784,7 +787,7 @@ class _DefaultPageState extends State<DefaultPage> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color:
-                    const Color.fromARGB(197, 139, 132, 148).withOpacity(0.75),
+                    const Color.fromARGB(197, 139, 132, 148).withOpacity(0.85),
               ),
               child: Row(
                 //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -883,7 +886,7 @@ class _DefaultPageState extends State<DefaultPage> {
                               //   feelingButton(angry_songs);
                               // }
                             },
-                          ), 
+                          ),
                           IconButton(
                             icon: const Icon(
                               Icons.replay,

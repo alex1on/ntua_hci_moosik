@@ -41,9 +41,9 @@ class _PlaylistPageState extends State<PlaylistPage> {
     sqLiteService = SQLiteService();
     setState(() {
       _playlistSongs = widget.playlistSongs;
-       _current_playlist = widget.playlist;
+      _current_playlist = widget.playlist;
       _player = widget.player;
-    _myWidgets = _buildWidgets(widget.playlistSongs.length);
+      _myWidgets = _buildWidgets(widget.playlistSongs.length);
     });
     // sqLiteService = SQLiteService();
     // sqLiteService.initDB().whenComplete(() async {
@@ -58,19 +58,19 @@ class _PlaylistPageState extends State<PlaylistPage> {
   // play/pause button
   void _press(int index) {
     if (_player.playing) {
-       _player.pause();
-       _player.setAudioSource(
-      AudioSource.uri(
-        Uri.parse('asset:///${widget.playlistSongs[index].url}'),
-      ),
-    );
+      _player.pause();
+      _player.setAudioSource(
+        AudioSource.uri(
+          Uri.parse('asset:///${widget.playlistSongs[index].url}'),
+        ),
+      );
     } else {
       _player.setAudioSource(
-      AudioSource.uri(
-        Uri.parse('asset:///${widget.playlistSongs[index].url}'),
-      ),
-    );
-       _player.play();
+        AudioSource.uri(
+          Uri.parse('asset:///${widget.playlistSongs[index].url}'),
+        ),
+      );
+      _player.play();
     }
     setState(() {});
   }
@@ -92,11 +92,21 @@ class _PlaylistPageState extends State<PlaylistPage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: Container(
-                    width: 20,
-                    height: 20,
+                    width: 35,
+                    height: 35,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       color: const Color(0xf7fc5b00),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'A',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -318,6 +328,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: _myWidgets.length,
+                    //itemCount: widget.playlistSongs.length,
                     itemBuilder: (BuildContext context, int index) {
                       return _myWidgets[index];
                     },

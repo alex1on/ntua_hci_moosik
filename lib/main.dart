@@ -245,7 +245,7 @@ class Song {
       title: 'The Sound of Silence',
       artist: 'Disturbed',
       url: '../assets/music/Disturbed - The Sound Of Silence.mp3',
-      type: 'Folk ',
+      type: 'Folk',
       tag2: 'Reflective',
       tag3: 'Melancholy',
     ),
@@ -1028,7 +1028,7 @@ class SQLiteService {
     'Catchy',
     'Darkness',
     'Chaos',
-    'Despaire',
+    'Despair',
     'Collaboration',
     'Dissatisfaction',
     'Cool',
@@ -1085,7 +1085,8 @@ class SQLiteService {
   ];
 
   // Affective Computing
-  Future<void> AffectiveComputing(List<Song> selectedSongs, int playlistID) async {
+  Future<void> AffectiveComputing(
+      List<Song> selectedSongs, int playlistID) async {
     List<int> indexes = List.generate(Tags.length, (index) => 0);
     List<int> SongScores = List.generate(Song.Songs.length, (index) => 0);
     for (int i = 0; i < selectedSongs.length - 1; i++) {
@@ -1109,17 +1110,20 @@ class SQLiteService {
       int index2 = Tags.indexOf(tag2!);
       int index3 = Tags.indexOf(tag3!);
 
-      if(index1 != -1 && index2 != -1 && index3 != -1){
+      if (index1 != -1 && index2 != -1 && index3 != -1) {
         SongScores[i] += indexes[index1] + indexes[index2] + indexes[index3];
       }
     }
 
     List<int> BestoSongScoresIndexes = List.generate(10, (index) => 0);
 
-    for(int i = 0; i < 10; i++) {
-      int maxIndex = SongScores.indexOf(SongScores.reduce((a, b) => a > b ? a : b));
+    for (int i = 0; i < 10; i++) {
+      int maxIndex =
+          SongScores.indexOf(SongScores.reduce((a, b) => a > b ? a : b));
       SongScores[maxIndex] = 0;
-      BestoSongScoresIndexes.add(maxIndex);
+      if (!BestoSongScoresIndexes.any((element) => element == maxIndex)) {
+        BestoSongScoresIndexes.add(maxIndex);
+      }
     }
 
     // List<int> sortedSongScores = List.from(SongScores); // create a copy of the original list
@@ -1128,13 +1132,14 @@ class SQLiteService {
     // List<int> BestoSongScoresIndexes = BestSongScores.map((number) => SongScores.indexOf(number)).toList(); // map each element to its index in the original list
     // print(indexes);
     // print(SongScores);
-
-
-    for(int i = 0; i < BestoSongScoresIndexes.length-1; i++) {
+    print(BestoSongScoresIndexes);
+    for (int i = 0; i < BestoSongScoresIndexes.length - 1; i++) {
+      if(BestoSongScoresIndexes[i] != 0 ) {
       final db = await initDB();
       Song.Songs[BestoSongScoresIndexes[i]].playlistID = playlistID;
-    db.insert('songs', Song.Songs[BestoSongScoresIndexes[i]].toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace);
+      db.insert('songs', Song.Songs[BestoSongScoresIndexes[i]].toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+    }
     }
   }
 }
