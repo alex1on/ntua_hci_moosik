@@ -39,3 +39,10 @@ Notice that the center widget is a smartwatch replica with certain vital sensors
 
 *	Get sensor data from smartwatch
 * Communicate between smartwatch app and base app
+
+# Contributors
+
+* [@alex1on](https://github.com/alex1on)
+* [@emsquared2](https://github.com/emsquared2)
+* [@GoldenLama](https://github.com/GoldenLama)
+
